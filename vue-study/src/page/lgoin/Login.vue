@@ -1,6 +1,6 @@
 <template>
   <div class="login_container">
-    <head-top></head-top>
+    <head-top go-back="ture" head-title="密码登录"></head-top>
     <!-- login界面 -->
     <form action="" class="loginForm">
       <section class="input_container">
@@ -26,19 +26,24 @@
       </section>
     </form>
     <!-- 登录按钮 -->
-    <p data-v-ff83a60c="" class="login_tips">
+    <p class="login_tips">
         温馨提示：未注册过的账号，登录时将自动注册
     </p>
-    <p data-v-ff83a60c="" class="login_tips">
+    <p class="login_tips">
         注册过的用户可凭账号密码登录
     </p>
-    <div data-v-ff83a60c="" class="loginbutton">登录</div>
+    <div class="loginbutton">登录</div>
     <router-link to="/forget" class="to_forget">重置密码？</router-link>
   </div>
 </template>
 <script>
 import headTop from '../../components/head/head'
 export default {
+  data () {
+    return {
+      loginWay: false, //登录方式，默认短信登录
+    }
+  },
  components:{
    headTop,
  }

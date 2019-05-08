@@ -13,12 +13,14 @@ let imgBaseUrl = '';
 
 
 if (process.env.NODE_ENV == 'development') {
-    imgBaseUrl = '/img/';
-
-}else if(process.env.NODE_ENV == 'production'){
-	baseUrl = '//elm.cangdu.org';
-    imgBaseUrl = '//elm.cangdu.org/img/';
+	axios.defaults.baseURL = 'https://elm.cangdu.org';}
+else if (process.env.NODE_ENV == 'debug') {
+	axios.defaults.baseURL = 'https://www.ceshi.com';
 }
+else if (process.env.NODE_ENV == 'production') {
+	axios.defaults.baseURL = 'https://www.production.com';
+}
+
 
 export {
 	baseUrl,

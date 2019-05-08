@@ -1,12 +1,50 @@
 <template>
+  <!-- 重置密码 -->
   <div class="forget_container">
-    <h1>这是forget页面</h1>
+    <head-top go-back="true" head-title="重置密码"></head-top>
+    <form action="" class="forget_form">
+      <section class="input_container phone_number">
+        <input type="text" placeholder="账号">
+        </section>
+      <section class="input_container">
+        <input type="text" placeholder="旧密码">
+        </section>
+      <section class="input_container">
+        <input type="text" placeholder="请输入新密码">
+        </section>
+      <section class="input_container">
+        <input type="text" placeholder="请确认密码">
+        </section>
+      <section class="input_container">
+        <input type="text" placeholder="验证码">
+        <!-- <div class="img_change">
+          <img src="../../assets/下载 (1).png" alt="">
+          <div class="change_image">
+            <p>看不清</p>
+            <p>换一张</p>
+          </div>
+        </div> -->
+        </section>
+    </form>
+    <div class="Confirm_change">确认修改</div>
   </div>
 </template>
 
 <script>
+import headTop from '../../components/head/head'
+
 export default {
-  
+  data () {
+    return {
+      
+    }
+  },
+  methods: {
+    
+  },
+  components:{
+    headTop,
+  }
 }
 </script>
 
@@ -14,4 +52,50 @@ export default {
 .forget_container{
   padding-top: 1.95rem;
 }
+.forget_form{
+  background-color: #fff;
+  margin-top: .6rem;
+}
+.input_container{
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f1f1;
+  padding: .6rem .8rem;
+}
+.forget_form .phone_number{
+  padding: .3rem .8rem;
+}
+.input_container input{
+  outline: none;
+  border: none;
+  font-size: .7rem;
+  color: #666;
+  font-family: "Microsoft Yahei";
+}
+.Confirm_change{
+  background-color: #4cd964;
+  text-align: center;
+  margin: 1rem .5rem;
+  border-radius: .15rem;
+  color: #fff;
+  font-size: .7rem;
+  padding: .5rem 0;
+}
+/* .img_change{
+  display: flex;
+  align-items: center;
+}
+.img_change img{
+  width: 3.5rem;
+  height: 1.5rem;
+  margin-right: .2rem;
+}
+.change_image{
+  width: 2rem;
+}
+.change_image p{
+  font-size: 0.55rem;
+  color:#666;
+  font-family: "Microsoft Yahei";
+} */
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="home-container">
     <!-- head区域 -->
-    <head-top>
+    <head-top signin-up='home'>
       <span slot='logo' class="head_logo"  @click="reload">ele.me</span>
     </head-top>
     <!-- nav区域 -->
@@ -12,7 +12,9 @@
         </div>
         <router-link  :to="'/city/' + guessCityid" class="guess_city">
           <span>{{guessCity}}</span>
-          <span class="arrow_right"></span>
+          <svg class="arrow_right">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
+          </svg>
         </router-link>
     </div>
     <!-- 热门城市 -->
@@ -28,7 +30,8 @@
     <section class="group_city_container">
             <ul class="letter_classify">
                 <li v-for="(value, key, index) in sortgroupcity" :key="key"  class="letter_classify_li">
-                    <h4 class="city_title">{{key}}<span v-if="index == 0">（按字母排序）</span>
+                    <h4 class="city_title">{{key}}
+                      <span v-if="index == 0">（按字母排序）</span>
                     </h4>
                     <ul class="groupcity_name_container citylistul clear">
                         <router-link  tag="li" v-for="item in value" :to="'/city/' + item.id" :key="item.id" class="ellipsis">
@@ -46,6 +49,7 @@
 <script>
 import headTop from '../../components/head/head'
 import foot from '../../components/footer/foot'
+import { cityGuess,groupcity,hotcity } from '../../service/getDate.js'
 
 export default {
   data () {
@@ -67,38 +71,33 @@ export default {
       for (let i = 0; i <= 90; i++) {
         if (this.groupcity[String.fromCharCode(i)]) {
           sortobj[String.fromCharCode(i)] = this.groupcity[String.fromCharCode(i)];
-          console.log(i);
+          // console.log(i);
         } 
        
       } return sortobj
     }
     },
   mounted(){
-      this.Hot();
-      this.Cityguess();
-      this.citygroup();
+      // 获取当前城市
+      cityGuess().then(res => {
+          this.guessCity = res.name;
+          this.guessCityid = res.id;
+      })
+      //获取所有城市
+      groupcity().then(res=>{
+          this.groupcity = res;
+      });
+      //获取热门城市
+      hotcity().then(res=>{
+          this.hotcity = res;
+      })
+      
     },
   methods:{
      //点击图标刷新页面
     reload(){
         window.location.reload();
     },
-    Hot() {
-      this.$http.get('https://elm.cangdu.org/v1/cities?type=hot').then(res => {
-        this.hotcity =  res.data;
-    })
-    },
-    Cityguess(){
-      this.$http.get('https://elm.cangdu.org/v1/cities?type=guess').then(res =>{
-        this.guessCity = res.data.name;
-        this.guessCityid = res.data.id;
-      })
-    },
-    citygroup(){
-      this.$http.get('https://elm.cangdu.org/v1/cities?type=group').then(res =>{
-        this.groupcity = res.data;
-      })
-    }
   }
 }
 </script>
@@ -110,6 +109,16 @@ export default {
   margin-bottom: .4rem;
   background: #fff;
   border-top: 1px solid #fff;
+}
+.head_logo{
+  font-size: .7rem;
+  position: absolute;
+  left:.4rem;
+  top: 30%;
+  width: 2.3rem;
+  height: .7rem;
+  font-weight: 400;
+  color: #fff;
 }
 .city_tip{
   display: flex;
@@ -136,6 +145,14 @@ export default {
   border-top: 1px solid #e4e4e4;
   border-bottom: 2px solid #e4e4e4;
 }
+.guess_city span{
+  color: #3190e8;
+}
+.guess_city .arrow_right{
+  width: .6rem;
+  height: .6rem;
+  color: #666;
+}
 .hot_city{
   margin-bottom: .4rem;
   background: #fff;
@@ -147,6 +164,11 @@ export default {
   text-indent: .45rem;
   border-bottom: 1px solid #e4e4e4;
   border-top: 2px solid #e4e4e4;
+}
+ul:after{
+    clear:both;
+    display:block;
+    content:" ";
 }
 .citylist li{
   width: 25%;
@@ -171,10 +193,13 @@ export default {
   border-top: 2px solid #e4e4e4;
   border-bottom: 1px solid #e4e4e4;
 }
+.letter_classify_li span{
+  font-size: .475rem;
+  color: #999;
+}
 .letter_classify_li .groupcity_name_container li{
   color: #666;
   width: 25%;
-  color: #3190e8;
   font: .6rem/1.75rem Microsoft YaHei;
   height: 1.75rem;
   border-bottom: 0.025rem solid #e4e4e4;

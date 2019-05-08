@@ -1,11 +1,24 @@
 <template>
   <div class="head_top">
-    <router-link to="/home" signin-up='home'>
-      <span class="head_logo" >ele.me</span>
+    <slot name='logo'></slot>
+    <!-- 返回按钮 -->
+    <section class="head_goback" v-if="goBack" @click="$router.go(-1)">
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" version="1.1">
+          <polyline points="12,18 4,9 12,0" style="fill:none;stroke:rgb(255,255,255);stroke-width:2"/>
+      </svg>
+    </section>
+    <!-- 登录注册 -->
+    <router-link :to="userInfo? '/profile':'/login'"   v-if='signinUp'  class="head_login">
+      <svg class="user_avatar" v-if="userInfo">
+      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
+      </svg>
+      <span class="login_span" v-else>登录|注册</span>
     </router-link>
-    <router-link to="/login" class="head_login">
-      <span class="login_span">登录|注册</span>
-    </router-link>
+    <!-- head_title -->
+    <section class="title_head ellipsis" v-if="headTitle">
+        <span class="title_text">{{headTitle}}</span>
+    </section>
+    <slot name="changecity"></slot>
   </div>
 </template>
 <script>
@@ -14,11 +27,12 @@ export default {
     return { 
     }
   },
+  props: ['signinUp', 'headTitle', 'goBack'],
   methods:{
     },
 }
 </script>
-<style lang="scss" scoped>
+<style scoped>
 .head_top{
   width: 100%;
   height: 1.95rem;
@@ -28,24 +42,31 @@ export default {
   left: 0;
   top: 0;
 }
-.head_logo{
-  font-size: .7rem;
-  width: 2.3rem;
-  height: .7rem;
-  text-align: center;
-  left: .34rem;
-  font-weight: 400;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #fff;
+.head_top .head_goback{
+  width: .6rem;
+  height: 1rem;
+  margin-left: .4rem;
+  line-height: 2.2rem;
 }
-.login_span{
-  position: absolute;
-  right: .55rem;
+.head_top .head_login{
   color: #fff;
   font-size: .65rem;
-  transform: translateY(-50%);
-  top: 50%
+  position: absolute;
+  right: .55rem;
+  top: 28%;
+}
+.head_top .title_head{
+  position: absolute;
+  left: 50%;
+  top: 16%;
+  width: 50%;
+  text-align: center;
+  margin-left: -25%;
+}
+.title_text{
+    font-size: 0.8rem;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
 }
 </style>
