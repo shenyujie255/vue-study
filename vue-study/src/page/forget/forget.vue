@@ -17,13 +17,13 @@
         </section>
       <section class="input_container">
         <input type="text" placeholder="验证码">
-        <!-- <div class="img_change">
+        <div class="img_change_img">
           <img src="../../assets/下载 (1).png" alt="">
-          <div class="change_image">
+          <div class="change_img">
             <p>看不清</p>
             <p>换一张</p>
           </div>
-        </div> -->
+        </div>
         </section>
     </form>
     <div class="Confirm_change">确认修改</div>
@@ -81,21 +81,22 @@ export default {
   font-size: .7rem;
   padding: .5rem 0;
 }
-/* .img_change{
+.img_change_img{
   display: flex;
   align-items: center;
+  height: 24px;
 }
-.img_change img{
+.img_change_img img{
   width: 3.5rem;
-  height: 1.5rem;
   margin-right: .2rem;
 }
-.change_image{
+.change_img{
   width: 2rem;
+  position: flex;
+  justify-content: center;
+  margin-left: .2rem;
 }
-.change_image p{
-  font-size: 0.55rem;
-  color:#666;
-  font-family: "Microsoft Yahei";
-} */
+.change_img p{
+  font-size: .55rem;
+}
 </style>

@@ -23,3 +23,10 @@ export const groupcity = () => get('/v1/cities',{
 
 
 export const  currentcity = number  => get('/v1/cities/'+ number);
+
+
+export const searchplace = (cityid, value) => get('/v1/pois',{
+	type: 'search',
+	city_id: cityid,
+	keyword: value
+})

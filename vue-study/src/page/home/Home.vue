@@ -40,15 +40,12 @@
                     </ul>
                 </li>
             </ul>
-        </section> 
-    <!-- <router-link to="/home">登录</router-link> -->
-    <foot></foot>
+      </section> 
   </div>
 </template>
 
 <script>
 import headTop from '../../components/head/head'
-import foot from '../../components/footer/foot'
 import { cityGuess,groupcity,hotcity } from '../../service/getDate.js'
 
 export default {
@@ -62,7 +59,6 @@ export default {
   },
   components:{
     headTop,
-    foot
   },
   computed:{
     //所有城市按A-Z分组

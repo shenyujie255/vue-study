@@ -5,8 +5,11 @@ import App from '../App'
 import Login from '../page/lgoin/Login.vue'
 import City from '../page/city/City.vue'
 import Forget from '../page/forget/forget.vue'
-Vue.use(Router)
+import Miste from '../page/miste/miste.vue'
+import Search from '../page/search/search.vue'
 
+
+Vue.use(Router)
 export default new Router({
   routes: [
     {
@@ -27,7 +30,11 @@ export default new Router({
         },
         { //重置密码页面
            path: '/forget', component: Forget 
-        }
+        },
+        { //商铺列表页面
+          path: '/miste', component: Miste 
+        },
+        { path: '/search/geohash', component: Search }
       ]
     }
   ]
