@@ -55,15 +55,17 @@ export default {
   font-size: .65rem;
   position: absolute;
   right: .55rem;
-  top: 28%;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .head_top .title_head{
   position: absolute;
   left: 50%;
-  top: 16%;
+  top: 50%;
   width: 50%;
   text-align: center;
-  margin-left: -25%;
+  transform: translate(-50%,-50%);
+  color: #fff;
 }
 .title_text{
     font-size: 0.8rem;

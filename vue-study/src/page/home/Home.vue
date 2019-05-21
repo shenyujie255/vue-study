@@ -110,11 +110,12 @@ export default {
   font-size: .7rem;
   position: absolute;
   left:.4rem;
-  top: 30%;
+  top: 50%;
   width: 2.3rem;
   height: .7rem;
   font-weight: 400;
   color: #fff;
+  transform: translateY(-50%);
 }
 .city_tip{
   display: flex;

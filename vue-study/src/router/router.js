@@ -7,7 +7,8 @@ import City from '../page/city/City.vue'
 import Forget from '../page/forget/forget.vue'
 import Miste from '../page/miste/miste.vue'
 import Search from '../page/search/search.vue'
-
+import Profile from '../page/profile/profile.vue'
+import Order from '../page/order/order.vue'
 
 Vue.use(Router)
 export default new Router({
@@ -34,7 +35,15 @@ export default new Router({
         { //商铺列表页面
           path: '/miste', component: Miste 
         },
-        { path: '/search/geohash', component: Search }
+        { //搜素页面
+          path: '/search/geohash', component: Search 
+        },
+        { //信息页面
+          path: '/profile', component: Profile
+        },
+        { //订单页面
+          path: '/order', component: Order
+        }
       ]
     }
   ]
