@@ -35,11 +35,13 @@
 <script>
 import headTop from '../../components/head/head'
 import footEnd from '../../components/footer/foot'
+import { misteAddress } from "../../service/getDate";
 
 export default {
   data() {
     return {
-      misteTitle: '请选择地址...',
+      gehash:'',   // city页面传递过来的地址geohash
+      misteTitle: '请选择地址...',  // msite页面头部标题
     }
   },
   mounted () {

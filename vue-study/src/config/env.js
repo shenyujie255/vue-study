@@ -7,23 +7,16 @@
  * 
  */
 
-let baseUrl = ''; 
-let routerMode = 'hash';
 let imgBaseUrl = '';
 
 
 if (process.env.NODE_ENV == 'development') {
-	axios.defaults.baseURL = 'https://elm.cangdu.org';}
-else if (process.env.NODE_ENV == 'debug') {
-	axios.defaults.baseURL = 'https://www.ceshi.com';
-}
-else if (process.env.NODE_ENV == 'production') {
-	axios.defaults.baseURL = 'https://www.production.com';
-}
+    imgBaseUrl = '/img/';
 
+}else if(process.env.NODE_ENV == 'production'){
+    imgBaseUrl = '//elm.cangdu.org/img/';
+}
 
 export {
-	baseUrl,
-	routerMode,
 	imgBaseUrl,
 }

@@ -119,7 +119,8 @@ export default {
   position: absolute;
   font-size: .6rem;
   color: #fff;
-  top: 28%;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .city_form{
   background-color: #fff;

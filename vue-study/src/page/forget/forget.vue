@@ -15,16 +15,16 @@
       <section class="input_container">
         <input type="text" placeholder="请确认密码">
         </section>
-      <section class="input_container">
-        <input type="text" placeholder="验证码">
-        <div class="img_change_img">
-          <img src="../../assets/下载 (1).png" alt="">
-          <div class="change_img">
+      <section class="input_container captcha_code_container">
+        <input type="text" placeholder="验证码"  v-model="codeNumber"  maxlength="4">
+        <div class="img_change">
+          <img v-show="captchaCodeImg" :src="captchaCodeImg">
+          <div class="change_image">
             <p>看不清</p>
-            <p>换一张</p>
+            <p class="Another_one" @click="getCaptchaCode">换一张</p>
           </div>
         </div>
-        </section>
+      </section>
     </form>
     <div class="Confirm_change">确认修改</div>
   </div>
@@ -32,15 +32,22 @@
 
 <script>
 import headTop from '../../components/head/head'
-
+import { getcaptchas } from "../../service/getDate";
 export default {
   data () {
     return {
-      
+      codeNumber: null,
+      captchaCodeImg: null,
     }
   },
   methods: {
-    
+    async getCaptchaCode(){
+    let res = await getcaptchas();
+    this.captchaCodeImg = res.code;
+  },
+  },
+  created () {
+  this.getCaptchaCode()
   },
   components:{
     headTop,
@@ -81,22 +88,30 @@ export default {
   font-size: .7rem;
   padding: .5rem 0;
 }
-.img_change_img{
+.captcha_code_container{
+  height: 2.2rem;
+}
+.img_change{
   display: flex;
   align-items: center;
-  height: 24px;
 }
-.img_change_img img{
+.img_change img{
   width: 3.5rem;
+  height: 1.5rem;
   margin-right: .2rem;
 }
-.change_img{
+.change_image{
   width: 2rem;
-  position: flex;
+  display: flex;
   justify-content: center;
-  margin-left: .2rem;
+  flex-wrap: wrap;
 }
-.change_img p{
-  font-size: .55rem;
+.change_image p{
+  font-size: 0.55rem;
+  color:#666;
+}
+.change_image .Another_one{
+  margin-top: .2rem;
+  color: #3b95e9;
 }
 </style>

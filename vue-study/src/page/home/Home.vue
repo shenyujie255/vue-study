@@ -12,7 +12,7 @@
         </div>
         <router-link  :to="'/city/' + guessCityid" class="guess_city">
           <span>{{guessCity}}</span>
-          <svg class="arrow_right">
+          <svg class="arrow_right" fill="#999">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
           </svg>
         </router-link>
@@ -148,7 +148,6 @@ export default {
 .guess_city .arrow_right{
   width: .6rem;
   height: .6rem;
-  color: #666;
 }
 .hot_city{
   margin-bottom: .4rem;

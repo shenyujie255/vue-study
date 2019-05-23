@@ -1,51 +1,92 @@
 <template>
   <div class="login_container">
-    <head-top go-back="ture" head-title="密码登录"></head-top>
+    <head-top go-back="ture" :head-title="loginWay? '登录':'密码登录'">
+
+    </head-top>
     <!-- login界面 -->
     <form action="" class="loginForm">
       <section class="input_container">
-        <input type="text" placeholder="账号">
+        <input type="text" placeholder="账号" v-model.lazy="userAccount">
       </section>
       <section class="input_container">
-        <input type="text" placeholder="密码">
-        <div class="button_switch">
-          <div class="circle_button"></div>
+        <input v-if="!showPassword" type="password" placeholder="密码"  v-model="passWord">
+        <input v-else type="text" placeholder="密码" v-model="passWord">
+        <div class="button_switch" :class="{change_to_text: showPassword}">
+          <div class="circle_button" @click="changePassWordType" :class="{trans_to_right: showPassword}"></div>
           <span>abc</span>
-          <span>...</span>
+          <span class="drop">...</span>
         </div>
       </section>
       <section class="input_container captcha_code_container">
-        <input type="text" placeholder="验证码">
+        <input type="text" placeholder="验证码"  v-model="codeNumber"  maxlength="4">
         <div class="img_change">
-          <img src="../../assets/下载 (1).png" alt="">
+          <img v-show="captchaCodeImg" :src="captchaCodeImg">
           <div class="change_image">
             <p>看不清</p>
-            <p>换一张</p>
+            <p class="Another_one" @click="getCaptchaCode">换一张</p>
           </div>
         </div>
       </section>
     </form>
-    <!-- 登录按钮 -->
     <p class="login_tips">
         温馨提示：未注册过的账号，登录时将自动注册
     </p>
     <p class="login_tips">
         注册过的用户可凭账号密码登录
     </p>
-    <div class="loginbutton">登录</div>
+    <!-- 登录按钮 -->
+    <div class="loginbutton" @click="mobileLogin">登录</div>
     <router-link to="/forget" class="to_forget">重置密码？</router-link>
   </div>
 </template>
 <script>
 import headTop from '../../components/head/head'
+import { getcaptchas,accountLogin } from "../../service/getDate";
+import { imgBaseUrl } from "../../config/env";
 export default {
   data () {
     return {
       loginWay: false, //登录方式，默认短信登录
+      userAccount: null,  //用户名
+      passWord: null,  //密码
+      showPassword: false,  // 是否显示密码,默认不显示
+      captchaCodeImg: null, //验证码图片地址
+      codeNumber:null,  //验证码
+      userInfo:null,  //用户信息
     }
   },
  components:{
    headTop,
+ },
+created () {
+  this.getCaptchaCode()
+},
+ methods: {
+  //  show(){
+  //    console.log(this.userAccount)
+  //是否显示密码
+  changePassWordType(){
+    this.showPassword = !this.showPassword
+  },
+  //获取验证码 注：这里使用异步promise
+  async getCaptchaCode(){
+    let res = await getcaptchas();
+    this.captchaCodeImg = res.code;
+  },
+  async mobileLogin(){
+    if (!this.userAccount){
+      alert('请输入用户名/密码/验证码')
+      return
+    }else if(!this.passWord){
+      alert('请输入正确密码')
+      return
+    }else if(!this.codeNumber){
+      alert('请输入正确验证码')
+      return
+    }
+    //用户名登录
+    this.userInfo = await accountLogin(this.userAccount, this.passWord, this.codeNumber);
+  }
  }
 }
 </script>
@@ -59,6 +100,9 @@ form {
   padding-top: 1.95rem;
   color: #f5f5f5;
   font-family: Helvetica Neue,Tahoma,Arial;
+}
+.login_container p {
+font-family: Helvetica Neue,Tahoma,Arial;
 }
 .loginForm{
   margin-top: .6rem;
@@ -100,11 +144,20 @@ form {
   transition: all 0.3s;
   z-index: 1;
 }
+.trans_to_right{
+  transform: translateX(1.3rem);
+}
+.change_to_text{
+  background-color: #4cd964;
+}
 .button_switch span{
   font-size: 0.45rem;
   color: #fff;  
   line-height: .6rem;
-  transform: translateY(0.005rem);
+  transform: translateY(0.05rem);
+}
+.button_switch .drop{
+  transform: translateY(-0.08rem);
 }
 .captcha_code_container{
   height: 2.2rem;
@@ -120,11 +173,17 @@ form {
 }
 .change_image{
   width: 2rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 .change_image p{
   font-size: 0.55rem;
   color:#666;
-  font-family: Helvetica Neue,Tahoma,Arial;
+}
+.change_image .Another_one{
+  margin-top: .2rem;
+  color: #3b95e9;
 }
 .login_tips{
   font-size: .5rem;
@@ -140,6 +199,7 @@ form {
   text-align: center;
   border-radius: 0.15rem;
   border: 1px;
+  color: #fff;
 }
 .to_forget{
   float: right;

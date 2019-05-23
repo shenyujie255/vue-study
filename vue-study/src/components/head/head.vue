@@ -1,5 +1,6 @@
 <template>
   <div class="head_top">
+    <!-- slot插槽(logo) -->
     <slot name='logo'></slot>
     <!-- 返回按钮 -->
     <section class="head_goback" v-if="goBack" @click="$router.go(-1)">
@@ -8,29 +9,44 @@
       </svg>
     </section>
     <!-- 登录注册 -->
-    <router-link :to="'/login'"   v-if='signinUp'  class="head_login">
-      <svg class="user_avatar" v-if="userInfo">
-      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
+    <router-link :to="userInfo? '/profile':'/login'"   v-if='signinUp'  class="head_login">
+      <svg class="user_avatar" v-if="userInfo" fill='#fff'>
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
       </svg>
       <span class="login_span" v-else>登录|注册</span>
     </router-link>
-    <!-- head_title -->
+    <!-- head标题 -->
     <section class="title_head ellipsis" v-if="headTitle">
         <span class="title_text">{{headTitle}}</span>
     </section>
+    <!-- slot插槽(changecity) -->
     <slot name="changecity"></slot>
+    <!-- slot插槽(miste-title) -->
     <slot name="miste-title"></slot>
+    <!-- slot插槽(search) -->
     <slot name="search"></slot>
   </div>
 </template>
 <script>
+import { mapState, mapActions } from 'vuex';
 export default {
   data() {
     return { 
     }
   },
   props: ['signinUp', 'headTitle', 'goBack'],
+  computed: {
+    ...mapState([
+      'userInfo'
+    ]),
+  },
+  mounted () {
+    this.getUserInfo();
+  },
   methods:{
+    ...mapActions([
+      'getUserInfo'
+    ])
     },
 }
 </script>
@@ -57,6 +73,10 @@ export default {
   right: .55rem;
   top: 50%;
   transform: translateY(-50%);
+}
+.head_top .head_login .user_avatar{
+  width: .8rem;
+  height: .8rem;
 }
 .head_top .title_head{
   position: absolute;
