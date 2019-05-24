@@ -2,7 +2,7 @@
   <div class="order_container">
     <head-top go-back="ture" head-title="订单列表"></head-top>
     <ul class="order_list">
-      邹阳是个大傻吊
+     
     </ul>
     <foot-end></foot-end>
   </div>

@@ -16,16 +16,18 @@
     <div class="mist_nav">
       <div class="swiper_container">
         <div class="swiper_wrapper">
-          <div class="swiper_slide food_types_container">
-            <router-link to="">
+          <div class="swiper_slide food_types_container" v-for="(item, index) in foodTypes" :key="index" style="width:354px;">
+            <router-link :to="{path: '/food', query: {geohash, title: foodItem.title, restaurant_category_id: getCategoryId(foodItem.link)}}" v-for="foodItem in item" :key="foodItem.id" class="foodItem_link">
               <figure>
-                <img src="">
-                <figcaption></figcaption>
+                <img :src="imgBaseUrl + foodItem.image_url">
+                <figcaption>{{foodItem.title}}</figcaption>
               </figure>
             </router-link>
           </div>
         </div>
-        <div class="swiperlist"></div>
+        <div class="swiperlist">
+          <span class="swiperlist_bullet swiperlist_active"></span><span class="swiperlist_bullet"></span>
+        </div>
       </div>
     </div>
     <foot-end></foot-end>
@@ -35,19 +37,49 @@
 <script>
 import headTop from '../../components/head/head'
 import footEnd from '../../components/footer/foot'
-import { misteAddress } from "../../service/getDate";
+import { misteAddress,cityGuess,misteFoodTypes } from "../../service/getDate";
 
 export default {
   data() {
     return {
-      gehash:'',   // city页面传递过来的地址geohash
-      misteTitle: '请选择地址...',  // msite页面头部标题
+      geohash:'',   // city页面传递过来的地址geohash
+      misteTitle: '请选择地址...',  // miste页面头部标题
+      imgBaseUrl: 'https://fuss10.elemecdn.com', //图片域名地址
+      foodTypes: [],  // 食品分类列表
     }
   },
+  async beforeMount(){
+    if (!this.$route.query.geohash) {
+      const adress = await cityGuess();
+      this.geohash = address.latitude + ',' + address.longitude;
+    } else {
+      this.geohash = this.$route.query.geohash
+    }//获取位置信息
+    let res = await misteAddress(this.geohash);
+    this.misteTitle = res.name; 
+  },
   mounted () {
+    //获取导航食品类型列表
+    misteFoodTypes(this.geohash).then(res =>{
+          let resLength = res.length;
+          let resArr = [...res]; // 返回一个新的数组				
+          let foodArr = [];
+    		for (let i = 0, j = 0; i < resLength; i += 16, j++) {
+    			foodArr[j] = resArr.splice(0, 8);
+    		}
+        this.foodTypes = foodArr;
+    })
   },
   methods: {
-    
+    // 解码url地址，求去restaurant_category_id值
+    	getCategoryId(url){
+    		let urlData = decodeURIComponent(url.split('=')[1].replace('&target_name',''));
+    		if (/restaurant_category_id/gi.test(urlData)) {
+    			return JSON.parse(urlData).restaurant_category_id.id
+    		}else{
+    			return ''
+    		}
+    	}
   },
   components:{
     headTop,
@@ -78,6 +110,11 @@ export default {
   font-size: .8rem;
   display: block;
 }
+.miste_title .ellipsis{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
 .mist_nav{
   padding-top: 2.1rem;
   background-color: #fff;
@@ -92,5 +129,60 @@ export default {
   height: auto;
   padding-bottom: .6rem;
   width: 100%;
+}
+.swiper_container{
+  width: 100%;
+  height: auto;
+  padding-bottom: .6rem;
+}
+.swiper_wrapper{
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.food_types_container{
+  display: flex;
+  flex-wrap: wrap;
+}
+.swiper-slide{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.foodItem_link{
+  width: 25%;
+  padding: .3rem 0rem;
+  display: flex;
+  justify-content: center;
+}
+.foodItem_link figure img{
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-bottom: .3rem;
+}
+.foodItem_link figure figcaption{
+  font-size: .55rem;
+  color: #666;
+  text-align: center;
+}
+.swiperlist{
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  bottom: .2rem;
+}
+.swiperlist_bullet{
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #000;
+  display: inline-block;
+  margin: 0 5px;
+  opacity: .2;
+}
+.swiperlist .swiperlist_active{
+  background: #007aff;
+  opacity: 1;
 }
 </style>

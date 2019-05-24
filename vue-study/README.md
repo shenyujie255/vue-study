@@ -20,18 +20,11 @@ npm run dev
 # 目标功能
 - [x] 定位功能 -- 完成
 - [x] 选择城市 -- 完成
-- [x] 搜索地址 -- 完成
-- [x] 展示所选地址附近商家列表 -- 
-- [x] 搜索美食，餐馆 -- 
+- [x] 搜索地址 -- 完成 
 - [x] 登录、注册 -- 完成
 - [x] 修改密码 -- 完成
-- [x] 个人中心 -- 
-- [x] 发送短信、语音验证 -- 
 - [x] 下载App -- 
-- [x] 添加、删除、修改收货地址 -- 
 - [x] 帐户信息 -- 
-- [x] 服务中心 -- 
-- [x] 上传头像 -- 
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 # License

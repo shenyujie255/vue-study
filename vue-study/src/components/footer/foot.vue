@@ -26,7 +26,7 @@
         </svg>
         <span>外卖</span>
       </section>
-      <section class="end_item" @click = "gotoAddress({path: `/search/${geohash}`})">
+      <section class="end_item" @click = "gotoAddress({path: '/search/geohash'})">
         <svg class="icon_style">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="$route.path.indexOf('search') !== -1? '#findActive' : '#find'"></use>
         </svg>

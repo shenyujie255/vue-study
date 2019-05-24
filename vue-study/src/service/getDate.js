@@ -50,9 +50,18 @@ export const getUser = () => get('/v1/user', {user_id: getStore('user_id')});
 /**
  * 获取验证码
  */
-export const getcaptchas = () => post('/v1/captchas',{})
+export const getcaptchas = () => post('/v1/captchas',{});
 
 /**
  * 获取用户信息
  */
-export const accountLogin = (username,password,captcha_code) => post('/v2/login',{username,password,captcha_code})
+export const accountLogin = (username,password,captcha_code) => post('/v2/login',{username,password,captcha_code});
+
+/**
+ * 获取食品列表
+ */
+export const misteFoodTypes = geohash => get('/v2/index_entry',{
+	geohash,
+	group_type: '1',
+	'flags[]': 'F'
+});
