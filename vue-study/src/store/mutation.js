@@ -1,4 +1,4 @@
-import { GET_USERINFO } from "./mutation-type";
+import { GET_USERINFO,SAVE_GEOHASH } from "./mutation-type";
 import { getStore } from "../utils/mUtils";
 
 export default{
@@ -15,5 +15,9 @@ export default{
 		} else {
 			state.userInfo = null;
 		}
+	},
+	// 保存geohash
+	[SAVE_GEOHASH](state, geohash){
+		state.geohash = geohash;
 	},
 }

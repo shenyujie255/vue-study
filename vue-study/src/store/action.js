@@ -1,5 +1,5 @@
 import { getUser } from "../service/getDate";
-import { GET_USERINFO } from "./mutation-type";
+import { GET_USERINFO, } from "./mutation-type";
 
 
 export default{

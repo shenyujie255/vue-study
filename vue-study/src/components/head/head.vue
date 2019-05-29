@@ -78,6 +78,9 @@ export default {
   width: .8rem;
   height: .8rem;
 }
+.head_top .login_span{
+  color: #fff;
+}
 .head_top .title_head{
   position: absolute;
   left: 50%;

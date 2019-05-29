@@ -95,7 +95,7 @@
       </section>
       <section class="profile_1reTe">
         <!-- 服务中心 -->
-        <router-link to="/home" class="myorder">
+        <router-link to="/service" class="myorder">
           <aside>
             <svg fill="#4aa5f0">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#service"></use>
@@ -111,7 +111,7 @@
           </div>
         </router-link>
         <!-- 下载饿了么App -->
-        <router-link to="/home" class="myorder">
+        <router-link to="/download" class="myorder">
           <aside>
             <svg fill="#3cabff">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#download"></use>
@@ -153,7 +153,8 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style <style lang="scss" scoped>
+
 .profile_number{
   padding-top: 1.95rem;
 }
@@ -221,8 +222,8 @@ export default {
 .info_data .info_data_link{
   width: 33.33%;
   display: inline-block;
-  float: left;
   border-right: 1px solid #f1f1f1;
+  float: left;
 }
 .info_data .info_data_link span{
   display: block;
@@ -234,10 +235,24 @@ export default {
   color: #333;
   padding: .853333rem 0 .453333rem;
 }
+.info_data_link:nth-of-type(2){
+  .info_data_top{
+    b{
+      color:#ff5f3e;
+    }
+  }
+}
+.info_data_link:nth-of-type(3){
+  .info_data_top{
+    b{
+      color:#6ac20b;
+    }
+  }
+}
 .info_data_link .info_data_top b{
   display: inline-block;
   font-size: 1.2rem;
-  color:#6ac20b;
+  color:#f90;
   font-weight: 700;
   line-height: 1rem;
   font-family: Helvetica Neue,Tahoma;

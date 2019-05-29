@@ -9,6 +9,8 @@ import Miste from '../page/miste/miste.vue'
 import Search from '../page/search/search.vue'
 import Profile from '../page/profile/profile.vue'
 import Order from '../page/order/order.vue'
+import Download from '../page/download/download.vue'
+import Service from '../page/service/service.vue'
 
 Vue.use(Router)
 export default new Router({
@@ -43,6 +45,12 @@ export default new Router({
         },
         { //订单页面
           path: '/order', component: Order
+        },
+        { //下载页面
+          path: '/download', component: Download
+        },
+        { //服务中心页面
+          path: '/service', component: Service 
         }
       ]
     }

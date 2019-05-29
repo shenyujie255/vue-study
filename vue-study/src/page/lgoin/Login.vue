@@ -85,8 +85,14 @@ created () {
       return
     }
     //用户名登录
-    this.userInfo = await accountLogin(this.userAccount, this.passWord, this.codeNumber);
-  }
+    this.userInfo = await accountLogin(this.userAccount, this.passWord, this.codeNumber);  
+    if (!this.userInfo.user_id) {
+      if (!this.loginWay) this.getCaptchaCode();
+    } else {
+      this.RECORD_USERINFO(this.userInfo);
+      this.$router.go(-1);
+    }
+    }
  }
 }
 </script>

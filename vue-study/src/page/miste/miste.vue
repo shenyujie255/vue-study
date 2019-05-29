@@ -14,9 +14,9 @@
     </head-top>
     <!-- 食品分类列表 -->
     <div class="mist_nav">
-      <div class="swiper_container">
-        <div class="swiper_wrapper">
-          <div class="swiper_slide food_types_container" v-for="(item, index) in foodTypes" :key="index" style="width:354px;">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide food_types_container" v-for="(item, index) in foodTypes" :key="index" style="width:354px;">
             <router-link :to="{path: '/food', query: {geohash, title: foodItem.title, restaurant_category_id: getCategoryId(foodItem.link)}}" v-for="foodItem in item" :key="foodItem.id" class="foodItem_link">
               <figure>
                 <img :src="imgBaseUrl + foodItem.image_url">
@@ -25,10 +25,18 @@
             </router-link>
           </div>
         </div>
-        <div class="swiperlist">
-          <span class="swiperlist_bullet swiperlist_active"></span><span class="swiperlist_bullet"></span>
-        </div>
+        <!-- Swiper分页器 -->
+        <div class="swiper-pagination"></div>
       </div>
+    </div>
+    <div class="shop_list_container">
+      <header class="shop_list_title">
+        <svg class="shop_icon">
+          <use xmlns="http://www.w3.org/2000/svg" xlink:href="#shop"></use>
+        </svg>
+        <span class="shop_head_title">附近商家</span>
+      </header>   
+      <shop-list v-if="hasGetData"></shop-list>
     </div>
     <foot-end></foot-end>
   </div>
@@ -37,7 +45,11 @@
 <script>
 import headTop from '../../components/head/head'
 import footEnd from '../../components/footer/foot'
-import { misteAddress,cityGuess,misteFoodTypes } from "../../service/getDate";
+import shopList from '../../components/commons/shoplist'
+import { misteAddress,cityGuess,misteFoodTypes } from "../../service/getDate"
+import "../../style/swiper.min.css"
+import Swiper from 'Swiper'   //Swiper插件
+import { mapMutations } from "vuex";
 
 export default {
   data() {
@@ -46,6 +58,7 @@ export default {
       misteTitle: '请选择地址...',  // miste页面头部标题
       imgBaseUrl: 'https://fuss10.elemecdn.com', //图片域名地址
       foodTypes: [],  // 食品分类列表
+      hasGetData: false, //是否已经获取地理位置数据，成功之后再获取商铺列表信息
     }
   },
   async beforeMount(){
@@ -54,9 +67,12 @@ export default {
       this.geohash = address.latitude + ',' + address.longitude;
     } else {
       this.geohash = this.$route.query.geohash
-    }//获取位置信息
+    }
+    // this.SAVE_GEOHASH(this.geohash);
+    //获取位置信息
     let res = await misteAddress(this.geohash);
     this.misteTitle = res.name; 
+    this.hasGetData = true;
   },
   mounted () {
     //获取导航食品类型列表
@@ -64,11 +80,19 @@ export default {
           let resLength = res.length;
           let resArr = [...res]; // 返回一个新的数组				
           let foodArr = [];
-    		for (let i = 0, j = 0; i < resLength; i += 16, j++) {
-    			foodArr[j] = resArr.splice(0, 8);
+    		for (let i = 0, j = 0; i < resLength; i += 8, j++) {
+          foodArr[j] = resArr.splice(0, 8);
     		}
         this.foodTypes = foodArr;
-    })
+        }).then(()=>{//初始化Swiper
+            new Swiper('.swiper-container', {
+            loop: true, // 循环模式选项
+            // 分页器
+            pagination: {
+            el: '.swiper-pagination',
+            },
+            })
+          })
   },
   methods: {
     // 解码url地址，求去restaurant_category_id值
@@ -84,6 +108,7 @@ export default {
   components:{
     headTop,
     footEnd,
+    shopList,
   }
 }
 </script>
@@ -104,11 +129,11 @@ export default {
   top: 50%;
   transform: translate(-50%,-50%);
   margin-left: -.5rem;
-  color: #fff;
 }
 .miste_title .title_text{
   font-size: .8rem;
   display: block;
+  color: #fff;
 }
 .miste_title .ellipsis{
   overflow: hidden;
@@ -121,35 +146,18 @@ export default {
   height: 10.6rem;
   border-bottom: .025rem solid #e4e4e4;
 }
-.mist_nav .swiper_container{
-  position: relative;
-  margin: auto;
-  overflow: hidden;
-  z-index: 1;
-  height: auto;
-  padding-bottom: .6rem;
-  width: 100%;
-}
-.swiper_container{
+.swiper-container{
   width: 100%;
   height: auto;
   padding-bottom: .6rem;
 }
-.swiper_wrapper{
-  width: 100%;
-  height: 100%;
-  display: flex;
+.swiper-container .swiper-pagination{
+  bottom: .2rem;
 }
 .food_types_container{
   display: flex;
   flex-wrap: wrap;
 }
-.swiper-slide{
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
 .foodItem_link{
   width: 25%;
   padding: .3rem 0rem;
@@ -184,5 +192,21 @@ export default {
 .swiperlist .swiperlist_active{
   background: #007aff;
   opacity: 1;
+}
+.shop_list_container{
+  margin-top: .4rem;
+  background: #fff;
+  border-top: .025rem solid #e4e4e4;
+}
+.shop_list_container .shop_icon{
+  width: .6rem;
+  height: .6rem;
+  fill: #999;
+  margin-left: .6rem;
+  vertical-align: middle;
+}
+.shop_list_container .shop_head_title{
+  font: 0.55rem/1.6rem "Microsoft YaHei";
+  color: #999;
 }
 </style>

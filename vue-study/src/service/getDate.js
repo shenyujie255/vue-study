@@ -65,3 +65,8 @@ export const misteFoodTypes = geohash => get('/v2/index_entry',{
 	group_type: '1',
 	'flags[]': 'F'
 });
+
+/**
+ * 获取服务中心热门问题
+ */
+export const getService = () => get('/v3/profile/explain')
