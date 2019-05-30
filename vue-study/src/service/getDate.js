@@ -70,3 +70,8 @@ export const misteFoodTypes = geohash => get('/v2/index_entry',{
  * 获取服务中心热门问题
  */
 export const getService = () => get('/v3/profile/explain')
+
+/**
+ * 退出登录
+ */
+export const signout = () => fetch('/v2/signout');

@@ -3,8 +3,10 @@
     <head-top go-back='ture' :head-title="profiletitle"></head-top>
     <section>
       <section class="profile_number">
-        <router-link to="/login" class="profile_link">
-          <span class="profile_image">
+        <!-- 三目运算符判断跳转地址 -->
+        <router-link :to="userInfo&&userInfo.user_id? '/profile/info' :'/login'" class="profile_link">
+          <img :src="imgBaseUrl + userInfo.avatar" alt="" v-if="userInfo&&userInfo.user_id" class="profile_image">
+          <span class="profile_image" v-else>
             <svg class="privateImage-svg">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#avatar-default"></use>
             </svg>
@@ -17,7 +19,7 @@
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#mobile"></use>
                 </svg>
               </span>
-              <span class="icon_moddile_number">暂无绑定手机号</span>
+              <span class="icon_moddile_number">{{ mobile }}</span>
             </p>
           </span>
           <span class="arrow">
@@ -129,6 +131,9 @@
       </section>
     </section>
     <foot-end></foot-end>
+    <transition name="router-slid" mode="out-in"> 
+        <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -136,21 +141,66 @@
 import headTop from '../../components/head/head'
 import footEnd from '../../components/footer/foot'
 import SvgIcon from '../../components/commons/svg'
+import { mapMutations, mapState } from "vuex";
+import { imgBaseUrl } from "../../config/env";
+import { getImgPath } from "../../components/commons/mixin";
 export default {
   data () {
     return {
       profiletitle: '我的',
       username: '登录/注册',           //用户名
+      mobile: '暂无绑定手机号',         //电话号码
       balance: 0,            //我的余额
       count : 0,             //优惠券个数
       pointNumber : 0,       //积分数
+      imgBaseUrl:'http://elm.cangdu.org/img/',  //图片地址
+      avater:'',             //头像地址
+    }
+  },
+  mounted() {
+    this.initData();
+  },
+  mixins: [getImgPath],
+  computed: {
+    ...mapState([
+      'userInfo',
+    ]),
+    //后台会返回两种头像地址格式，分别处理
+        imgpath:function () {
+            let path;
+            if(this.avatar.indexOf('/') !==-1){
+                path = imgBaseUrl +　this.avatar;
+            }else{
+                path = this.getImgPath(this.avatar)
+                 console.log(this.getImgPath(this.avatar));
+            }
+            this.SAVE_AVANDER(path);
+            return path;
+        }
+  },
+  methods: {
+    initData(){
+      if (this.userInfo && this.userInfo.user_id) {
+        this.username = this.userInfo.username;
+        this.avatar = this.userInfo.avatar;
+        this.mobile = this.userInfo.mobile || '暂无绑定手机号';
+      } else {
+        this.username = '登录/注册';
+        this.mobile = '暂无绑定手机号';
+      }
     }
   },
   components: {
     headTop,
     footEnd,
     SvgIcon
-  }
+  },
+   watch: {
+        //  监听处理函数,当value值发生变化时执行函数
+        userInfo: function (value){
+            this.initData()
+        }
+    }
 }
 </script>
 <style <style lang="scss" scoped>
@@ -170,7 +220,7 @@ export default {
   padding: .666667rem .6rem;
   background: #3190e8;
 }
-.profile_image{
+.profile_number .profile_link .profile_image{
   display: inline-block;
   width: 2.5rem;
   height: 2.5rem;
@@ -314,5 +364,12 @@ export default {
 }
 .profile_1reTe .myorder .down{
   border: 0;
+}
+.router-slid-enter-active, .router-slid-leave-active {
+    transition: all .4s;
+}
+.router-slid-enter, .router-slid-leave-active {
+    transform: translate3d(2rem, 0, 0);
+    opacity: 0;
 }
 </style>

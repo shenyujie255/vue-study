@@ -1,7 +1,6 @@
 <template>
   <div class="login_container">
     <head-top go-back="ture" :head-title="loginWay? '登录':'密码登录'">
-
     </head-top>
     <!-- login界面 -->
     <form action="" class="loginForm">
@@ -43,6 +42,7 @@
 import headTop from '../../components/head/head'
 import { getcaptchas,accountLogin } from "../../service/getDate";
 import { imgBaseUrl } from "../../config/env";
+import { mapMutations } from "vuex";
 export default {
   data () {
     return {
@@ -62,38 +62,42 @@ created () {
   this.getCaptchaCode()
 },
  methods: {
-  //  show(){
-  //    console.log(this.userAccount)
-  //是否显示密码
-  changePassWordType(){
-    this.showPassword = !this.showPassword
+   ...mapMutations([
+     'RECORD_USERINFO',
+   ]),
+    //  show(){
+    //    console.log(this.userAccount)
+    //是否显示密码
+    changePassWordType(){
+      this.showPassword = !this.showPassword
+    },
+    //获取验证码 注：这里使用异步promise
+    async getCaptchaCode(){
+      let res = await getcaptchas();
+      this.captchaCodeImg = res.code;
+    },
+    async mobileLogin(){
+        if (!this.userAccount){
+          alert('请输入用户名/密码/验证码')
+          return
+        }else if(!this.passWord){
+          alert('请输入正确密码')
+          return
+        }else if(!this.codeNumber){
+          alert('请输入正确验证码')
+          return
+        }
+        //用户名登录
+        this.userInfo = await accountLogin(this.userAccount, this.passWord, this.codeNumber);  
+        if (!this.userInfo.user_id) {
+            if (!this.loginWay) this.getCaptchaCode();
+        } else {
+          this.RECORD_USERINFO(this.userInfo);
+          this.$router.go(-1);
+        }
+    },
+    
   },
-  //获取验证码 注：这里使用异步promise
-  async getCaptchaCode(){
-    let res = await getcaptchas();
-    this.captchaCodeImg = res.code;
-  },
-  async mobileLogin(){
-    if (!this.userAccount){
-      alert('请输入用户名/密码/验证码')
-      return
-    }else if(!this.passWord){
-      alert('请输入正确密码')
-      return
-    }else if(!this.codeNumber){
-      alert('请输入正确验证码')
-      return
-    }
-    //用户名登录
-    this.userInfo = await accountLogin(this.userAccount, this.passWord, this.codeNumber);  
-    if (!this.userInfo.user_id) {
-      if (!this.loginWay) this.getCaptchaCode();
-    } else {
-      this.RECORD_USERINFO(this.userInfo);
-      this.$router.go(-1);
-    }
-    }
- }
 }
 </script>
 

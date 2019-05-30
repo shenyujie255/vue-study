@@ -10,6 +10,13 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {//设置代理
+      "/api":{//设置完成后一定要重启项目，坑了好久~~~
+        target: 'https://elm.cangdu.org',
+        changeOrigin: true,
+        pathRewrite: {
+            '^/api': '/'
+        }
+    }
     },
 
     // Various Dev Server settings

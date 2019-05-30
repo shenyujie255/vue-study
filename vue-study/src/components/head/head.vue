@@ -25,6 +25,8 @@
     <slot name="miste-title"></slot>
     <!-- slot插槽(search) -->
     <slot name="search"></slot>
+    <!-- slot插槽(edit) -->
+    <slot name="edit"></slot>
   </div>
 </template>
 <script>

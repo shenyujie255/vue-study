@@ -40,7 +40,7 @@
   
 // 配置编译环境和线上环境之间的切换
 if (process.env.NODE_ENV == 'development') {
-	axios.defaults.baseURL = 'https://elm.cangdu.org';}
+	axios.defaults.baseURL = '/api';}
 else if (process.env.NODE_ENV == 'debug') {
 	axios.defaults.baseURL = 'https://www.ceshi.com';
 }

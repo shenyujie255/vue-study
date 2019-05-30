@@ -49,7 +49,7 @@ import shopList from '../../components/commons/shoplist'
 import { misteAddress,cityGuess,misteFoodTypes } from "../../service/getDate"
 import "../../style/swiper.min.css"
 import Swiper from 'Swiper'   //Swiper插件
-import { mapMutations } from "vuex";
+import { mapMutations } from 'vuex'
 
 export default {
   data() {
@@ -63,15 +63,19 @@ export default {
   },
   async beforeMount(){
     if (!this.$route.query.geohash) {
-      const adress = await cityGuess();
+      const adress = await cityGuess();   //做判断如果flase则获取首页默认位置
       this.geohash = address.latitude + ',' + address.longitude;
     } else {
       this.geohash = this.$route.query.geohash
     }
-    // this.SAVE_GEOHASH(this.geohash);
+    // 保存geohash到vuex
+    this.SAVE_GEOHASH(this.geohash);
     //获取位置信息
     let res = await misteAddress(this.geohash);
     this.misteTitle = res.name; 
+    // console.log(this.misteTitle);
+    //  记录经纬度到vuex
+    this.RECORD_ADDRESS(res);
     this.hasGetData = true;
   },
   mounted () {
@@ -103,7 +107,10 @@ export default {
     		}else{
     			return ''
     		}
-    	}
+      },
+      ...mapMutations([
+        'SAVE_GEOHASH','RECORD_ADDRESS'
+      ])
   },
   components:{
     headTop,

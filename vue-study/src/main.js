@@ -10,6 +10,7 @@ import axios from 'axios'
 Vue.config.productionTip = false
 //将axios绑定到vue原型中
 Vue.prototype.$http = axios 
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 /* eslint-disable no-new */
 new Vue({
 	router,

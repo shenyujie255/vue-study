@@ -11,7 +11,8 @@ import Profile from '../page/profile/profile.vue'
 import Order from '../page/order/order.vue'
 import Download from '../page/download/download.vue'
 import Service from '../page/service/service.vue'
-
+import Info from '../page/profile/chilrdren/info.vue'
+import Address from '../page/profile/chilrdren/children/address.vue'
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -41,7 +42,13 @@ export default new Router({
           path: '/search/geohash', component: Search 
         },
         { //信息页面
-          path: '/profile', component: Profile
+          path: '/profile', component: Profile,
+          children:[{
+             path: 'info', component: Info,
+             children:[{
+               path: 'address',component: Address,
+             }] 
+          }]
         },
         { //订单页面
           path: '/order', component: Order
