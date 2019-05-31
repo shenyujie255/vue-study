@@ -64,12 +64,10 @@ export default {
     //所有城市按A-Z分组
     sortgroupcity(){
       let sortobj = {};
-      for (let i = 0; i <= 90; i++) {
+      for (let i = 65; i <= 90; i++) {//String.fromCharCode方法将 Unicode 编码转为A-Z
         if (this.groupcity[String.fromCharCode(i)]) {
           sortobj[String.fromCharCode(i)] = this.groupcity[String.fromCharCode(i)];
-          // console.log(i);
         } 
-       
       } return sortobj
     }
     },
@@ -85,7 +83,7 @@ export default {
       });
       //获取热门城市
       hotcity().then(res=>{
-          this.hotcity = res;
+          this.hotcity = res;  
       })
       
     },

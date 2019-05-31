@@ -10,7 +10,7 @@ const state = {
   userInfo: null, //用户信息
   latitude: '', // 当前位置纬度
   longitude: '', // 当前位置经度
-  login: true,//是否登录
+  login: false,//是否登录
 }
 
 export default new Vuex.Store({

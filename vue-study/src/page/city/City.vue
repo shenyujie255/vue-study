@@ -86,7 +86,7 @@ export default {
         let choosePlace = this.placelist[index];
         if (history) {
         let checkrepeat = false;
-        this.placeHistory = JSON.parse(history);
+        this.placeHistory = JSON.parse(history);   //JSON.parse将接受的数据转换成对象
         this.placeHistory.forEach(item => {
         if (item.geohash == geohash) {
           checkrepeat = true;
