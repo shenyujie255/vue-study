@@ -1,22 +1,20 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from '../page/home/Home.vue'
 import App from '../App'
-import Login from '../page/lgoin/Login.vue'
-import City from '../page/city/City.vue'
-import Forget from '../page/forget/forget.vue'
-import Miste from '../page/miste/miste.vue'
-import Search from '../page/search/search.vue'
-import Profile from '../page/profile/profile.vue'
-import Order from '../page/order/order.vue'
-import Download from '../page/download/download.vue'
-import Service from '../page/service/service.vue'
-import Info from '../page/profile/chilrdren/info.vue'
-import Address from '../page/profile/chilrdren/children/address.vue'
-Vue.use(Router)
-export default new Router({
-  routes: [
-    {
+
+const Home = r => require.ensure([], () => r(require('../page/home/Home.vue')),'Home')
+const Login = r => require.ensure([], () => r(require('../page/lgoin/Login.vue')),'Login')
+const City = r => require.ensure([], () => r(require('../page/city/City.vue')),'City') 
+const Forget = r => require.ensure([], () => r(require('../page/forget/forget.vue')),'Forget')
+const Miste = r => require.ensure([], () => r(require('../page/miste/miste.vue')),'Miste')
+const Search = r => require.ensure([], () => r(require('../page/search/search.vue')),'Search')
+const Profile = r => require.ensure([], () => r(require('../page/profile/profile.vue')),'Profile')
+const Order = r => require.ensure([], () => r(require('../page/order/order.vue')),'Order')
+const Download = r => require.ensure([], () => r(require('../page/download/download.vue')),'Download')
+const Service = r => require.ensure([], () => r(require('../page/service/service.vue')),'Service')
+const Info = r => require.ensure([], () => r(require('../page/profile/chilrdren/info')),'Info')
+const Address = r => require.ensure([], () => r(require('../page/profile/chilrdren/children/address.vue')),'Address')
+
+
+ export default [{
       path: '/',
       component: App, //顶层路由，对应index.html
       children:[//二级路由。对应App.vue
@@ -36,7 +34,8 @@ export default new Router({
            path: '/forget', component: Forget 
         },
         { //商铺列表页面
-          path: '/miste', component: Miste 
+          path: '/miste', component: Miste,
+          meta: { keepAlive: true },    //组件需要被缓存
         },
         { //搜素页面
           path: '/search/geohash', component: Search 
@@ -60,6 +59,4 @@ export default new Router({
           path: '/service', component: Service 
         }
       ]
-    }
-  ]
-})
+    }]
