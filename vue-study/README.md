@@ -30,6 +30,23 @@ npm run dev
 - [x] 上传头像 -- 完成
 - [x] 餐馆食品列表页 -- 完成
 
+
+# 部分截图
+### 商铺列表页
+
+<img src="./src/assets/miste.png" width="365" height="619"/>
+
+### 登录
+
+<img src="./src/assets/login1.png" width="365" height="619"/>
+
+### 首页
+
+<img src="./src/assets/home.png" width="365" height="619"/>
+
+### 个人中心
+
+<img src="./src/assets/profile.png" width="365" height="619"/>
 # 项目布局
 
 ```
