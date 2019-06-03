@@ -43,6 +43,17 @@ export const searchplace = (cityid, value) => get('/v1/pois',{
 export const misteAddress = geohash => get('/v2/pois/' + geohash);
 
 /**
+ * 获取商铺列表
+ */
+export const shopList = (latitude, longitude,offset,restaurant_category_id,order_by,) => get('/shopping/restaurants',{
+	latitude,
+	longitude,
+	offset,
+	restaurant_category_id,
+	order_by,
+});
+
+/**
  * 获取用户信息
  */
 

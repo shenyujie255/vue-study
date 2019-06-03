@@ -61,6 +61,7 @@ export default {
   color: #fff;
   left: 0;
   top: 0;
+  z-index: 100;
 }
 .head_top .head_goback{
   width: .6rem;
