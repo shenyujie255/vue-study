@@ -16,7 +16,7 @@ cd vue2-elm
 npm install 或 yarn(推荐)
 
 npm run dev
-
+```
 # 目前功能
 - [x] 定位功能 -- 完成
 - [x] 选择城市 -- 完成
@@ -47,6 +47,7 @@ npm run dev
 ### 个人中心
 
 <img src="./src/assets/profile.png" width="365" height="619"/>
+
 # 项目布局
 
 ```
@@ -143,3 +144,4 @@ npm run dev
 │   ├── main.js                                 // 程序入口文件，加载各种公共组件
 ├── favicon.ico                                 // 图标
 ├── index.html                                  // 入口html文件
+```
