@@ -1,12 +1,12 @@
 <template>
     <div>
-        <transition name="router-fade">
+        <transition name="router-fade" mode="out-in">
             <keep-alive v-if="$route.meta.keepAlive">
                 <!-- keepAlive为true组件被缓存 -->
                 <router-view></router-view>
             </keep-alive>   
         </transition>
-        <transition name="router-fade">
+        <transition name="router-fade" mode="out-in">
             <keep-alive v-if="!$route.meta.keepAlive">
                 <router-view></router-view>
             </keep-alive>   

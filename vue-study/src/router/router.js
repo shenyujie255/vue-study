@@ -1,5 +1,5 @@
 import App from '../App'
-
+// router按需加载
 const Home = r => require.ensure([], () => r(require('../page/home/Home.vue')),'Home')
 const Login = r => require.ensure([], () => r(require('../page/lgoin/Login.vue')),'Login')
 const City = r => require.ensure([], () => r(require('../page/city/City.vue')),'City') 

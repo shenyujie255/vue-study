@@ -1,3 +1,4 @@
+// 宽高
 @mixin wh($width, $height) {
 	width: $width;
 	height: $height;
@@ -7,6 +8,7 @@
 	display: flex;
 	justify-content: $type;
 }
+// 字体和颜色
 @mixin sc($size, $color) {
 	font-size: $size;
 	color: $color;
