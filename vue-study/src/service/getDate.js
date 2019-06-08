@@ -85,4 +85,4 @@ export const getService = () => get('/v3/profile/explain')
 /**
  * 退出登录
  */
-export const signout = () => fetch('/v2/signout');
+export const signout = () => get('/v2/signout');

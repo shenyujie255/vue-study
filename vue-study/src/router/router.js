@@ -12,7 +12,7 @@ const Download = r => require.ensure([], () => r(require('../page/download/downl
 const Service = r => require.ensure([], () => r(require('../page/service/service.vue')),'Service')
 const Info = r => require.ensure([], () => r(require('../page/profile/chilrdren/info')),'Info')
 const Address = r => require.ensure([], () => r(require('../page/profile/chilrdren/children/address.vue')),'Address')
-
+const Food = r => require.ensure([],() => r(require('../page/food/food.vue')),'Food')
 
  export default [{
       path: '/',
@@ -57,6 +57,9 @@ const Address = r => require.ensure([], () => r(require('../page/profile/chilrdr
         },
         { //服务中心页面
           path: '/service', component: Service 
+        },
+        { //food页面
+          path: '/food', component: Food 
         }
       ]
     }]
