@@ -35,10 +35,12 @@ const Food = r => require.ensure([],() => r(require('../page/food/food.vue')),'F
         },
         { //商铺列表页面
           path: '/miste', component: Miste,
-          meta: { keepAlive: true },    //组件需要被缓存
+          meta: {
+             keepAlive: true 
+          },    //组件需要被缓存
         },
         { //搜素页面
-          path: '/search/geohash', component: Search 
+          path: '/search/:geohash', component: Search 
         },
         { //信息页面
           path: '/profile', component: Profile,

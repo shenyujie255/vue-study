@@ -60,7 +60,7 @@ import { mapState } from "vuex";
     components:{
 
     },
-    props: [''],
+    props: ['geohash'],
     computed: {
       ...mapState([
         'latitude','longitude'
@@ -70,8 +70,6 @@ import { mapState } from "vuex";
       async initData(){
         let res = await shopList(this.latitude,this.longitude);
         this.shopListArr = [...res];
-        console.log(this.shopListArr );
-
       }
     }
   }

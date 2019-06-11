@@ -86,3 +86,10 @@ export const getService = () => get('/v3/profile/explain')
  * 退出登录
  */
 export const signout = () => get('/v2/signout');
+
+export const searchRestaurant = (geohash,keyword) => get('/v4/restaurants',{
+	'extras[]': 'restaurant_activity',
+	geohash,
+	keyword,
+	type: 'search'
+})

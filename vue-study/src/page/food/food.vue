@@ -35,7 +35,7 @@
         </section>
     </section>
     <section class="sort_list_container">
-        <shop-list></shop-list>
+        <shop-list v-if="latitude"></shop-list>
     </section>
 </div>
 </template>
@@ -43,17 +43,43 @@
 <script>
 import headTop from '../../components/head/head'
 import shopList from '../../components/commons/shoplist'
+import { misteAddress } from '../../service/getDate';
+import { mapMutations,mapState } from "vuex";
   export default {
     data () {
       return {
-          headTitle: '甜品饮品',
+          headTitle: '',    // miste页面头部标题
+          geohash: "",  // city页面传递过来的地址geohash
+          foodTitle: "",   // 排序左侧头部标题
+          restaurant_category_id: "", // 食品类型id值
       }
     },
-    mounted() {
-        
+    created() {
+        this.initData();
+    },
+    computed: {
+        ...mapState([
+            "latitude","longitude"
+        ])
     },
     methods: {
-        
+        ...mapMutations([   //存储地址信息到vuex
+            "RECORD_ADDRESS"
+        ]),
+        async initData(){
+            //获取数据从miste页面传递过来的参数
+            this.geohash = this.$route.query.geohash;
+            this.headTitle = this.$route.query.title;
+            this.restaurant_category_id = this.$route.query.restaurant_category_id;
+            //防止刷新页面时，vuex状态丢失，经度纬度需要重新获取，并存入vuex
+            if (!this.latitude) {
+                // console.log(Number(!this.latitude))
+                //获取位置信息
+                let res = await misteAddress(this.geohash);
+                // 记录当前经纬度存入vuex
+                this.RECORD_ADDRESS(res);
+            }
+        }
     },
     components: {
         headTop,

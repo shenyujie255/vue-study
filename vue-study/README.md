@@ -29,8 +29,9 @@ npm run dev
 - [x] 服务中心 -- 完成
 - [x] 上传头像 -- 完成
 - [x] 餐馆食品列表页 -- 完成
-
-
+- [x] 展示所选地址附近商家列表 -- 完成
+- [x] 搜索美食，餐馆 -- 完成
+- [x] 食品分类列表 -- 完成
 # 部分截图
 ### 商铺列表页
 
@@ -46,7 +47,19 @@ npm run dev
 
 ### 个人中心
 
-<img src="./src/assets/profile.png" width="365" height="619"/>
+<img src="./src/assets/search1.png" width="365" height="619"/>
+
+### 搜索
+
+<img src="./src/assets/search2.png" width="365" height="619"/>
+
+### 服务中心
+
+<img src="./src/assets/fuwu.png" width="365" height="619"/>
+
+### 食品分类页
+
+<img src="./src/assets/foodlist.png" width="365" height="619"/>
 
 # 项目布局
 

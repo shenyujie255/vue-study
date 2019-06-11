@@ -7,7 +7,7 @@
     <form class="city_form" v-on:submit.prevent>
       <div>
         <!-- 双向绑定信息渲染到getsearch_ul -->
-        <input type="text" placeholder="输入学校、商务楼、地址"  class="city_input input_style" v-model="inputVaule">
+        <input type="text" placeholder="输入学校、商务楼、地址"  class="city_input input_style" required v-model="inputVaule">
       </div>
       <div>
         <!-- 提交按钮，调用postpois方法-->
