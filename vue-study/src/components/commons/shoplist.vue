@@ -15,7 +15,8 @@
           <h5 class="star_num">
             <section class="star_num_left">
                 <section class="star_section">
-                  <span class="rating_num"></span>
+                  <rating-star :rating='item.rating'></rating-star>
+                  <span class="rating_num">{{item.rating}}</span>
                 </section>
                 <section class="order_section">
                     月售{{ item.recent_order_num }}单
@@ -46,6 +47,7 @@
 
 <script>
 import { shopList } from "../../service/getDate";
+import ratingStar from './ratingstar'
 import { mapState } from "vuex";
   export default {
     data () {
@@ -58,7 +60,7 @@ import { mapState } from "vuex";
       this.initData();
     },
     components:{
-
+      ratingStar,
     },
     props: ['geohash'],
     computed: {
@@ -135,8 +137,6 @@ import { mapState } from "vuex";
     .star_num_left{
         @include fj(flex-start);
         .star_section{
-            width: 70.063px;
-            height: 13.266px;
             display: flex;
             .rating_num{
                 @include sc(0.4rem, #ff6000);
