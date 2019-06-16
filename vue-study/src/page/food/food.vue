@@ -2,6 +2,7 @@
 <div class="food_page">
     <head-top go-back='true' :head-title='headTitle'></head-top>
     <section class="sort_container">
+        <!-- 分类 -->
         <section class="sort_item">
             <div class="sort_item_container">
                 <div class="shop_item_border">
@@ -11,19 +12,92 @@
                     </svg>
                 </div>
             </div>
-            <section class="sort_detail_type category_container"></section>
+            <section class="sort_detail_type category_container">
+
+            </section>
         </section>
-        <section class="sort_item">
-            <div class="sort_item_container">
+        <!-- 排序 -->
+        <section class="sort_item" :class="{choose_type:sortBy == 'sort'}">
+            <div class="sort_item_container" @click="chooseType('sort')">
                 <div class="shop_item_border">
-                    <span>排序</span>
+                    <span :class="{category_title:sortBy == 'sort'}">排序</span>
                     <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg" version="1.1" class="sort_icon">
                         <polygon points="0,3 10,3 5,8"/>
                     </svg>
                 </div>
             </div>
-            <section class="sort_detail_type category_container"></section>
+            <section class="sort_detail_type" v-show="sortBy == 'sort'">
+                <ul class="sort_list_container">
+                    <li class="sort_list_li">
+                        <svg>
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#default"></use>
+                        </svg>
+                        <p class="sort_select">
+                            <span>智能排序</span>
+                            <svg v-if="sortByType == 0">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                            </svg>
+                        </p>
+                    </li>
+                    <li class="sort_list_li">
+                        <svg>
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#distance"></use>
+                        </svg>
+                        <p class="sort_select">
+                            <span>距离最近</span>
+                            <svg v-if="sortByType == 0">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                            </svg>
+                        </p>
+                    </li>
+                    <li class="sort_list_li">
+                        <svg>
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hot"></use>
+                        </svg>
+                        <p class="sort_select">
+                            <span>销量最高</span>
+                            <svg v-if="sortByType == 0">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                            </svg>
+                        </p>
+                    </li>
+                    <li class="sort_list_li">
+                        <svg>
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#price"></use>
+                        </svg>
+                        <p class="sort_select">
+                            <span>起送价最低</span>
+                            <svg v-if="sortByType == 0">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                            </svg>
+                        </p>
+                    </li>
+                    <li class="sort_list_li">
+                        <svg>
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#speed"></use>
+                        </svg>
+                        <p class="sort_select">
+                            <span>配送速度最快</span>
+                            <svg v-if="sortByType == 0">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                            </svg>
+                        </p>
+                    </li>
+                    <li class="sort_list_li">
+                        <svg>
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#rating"></use>
+                        </svg>
+                        <p class="sort_select">
+                            <span>评分最高</span>
+                            <svg v-if="sortByType == 0">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                            </svg>
+                        </p>
+                    </li>
+                </ul>
+            </section>
         </section>
+        <!-- 筛选 -->
         <section class="sort_item">
             <div class="sort_item_container">
                 <span>筛选</span>
@@ -52,6 +126,8 @@ import { mapMutations,mapState } from "vuex";
           geohash: "",  // city页面传递过来的地址geohash
           foodTitle: "",   // 排序左侧头部标题
           restaurant_category_id: "", // 食品类型id值
+          sortBy: "",    //筛选条件
+          sortByType:null, // 根据何种方式排序
       }
     },
     created() {
@@ -79,7 +155,14 @@ import { mapMutations,mapState } from "vuex";
                 // 记录当前经纬度存入vuex
                 this.RECORD_ADDRESS(res);
             }
-        }
+        },
+         chooseType(type){
+            if (this.sortBy !== type) {
+                this.sortBy = type;
+            } else {
+                this.sortBy = "";
+            }
+        },
     },
     components: {
         headTop,
@@ -121,14 +204,54 @@ import { mapMutations,mapState } from "vuex";
                 height: 1rem;
                 border-right: .025rem solid #e4e4e4;                
             }
-            .sort_icon{
-                vertical-align: middle;
-                transition: all 0.3s;
-                fill: #666;
-            }
         }
         .sort_detail_type{
-
+            position: absolute;
+            top: 1.6rem;
+            width: 100%;
+            left: 0;
+            background-color: #fff;
+            border-top: 0.025rem solid #e4e4e4;
+            display: flex;
+            .sort_list_container{
+                width: 100%;
+                .sort_list_li{
+                    display: flex;
+                    align-items: center;
+                    height: 2.5rem;
+                    svg{
+                        width: .7rem;
+                        height: .7rem;
+                        margin: 0 0.3rem 0 0.8rem;
+                    }
+                    p{
+                        line-height: 2.5rem;
+                        display: flex;
+                        align-items: center;
+                        border-bottom: .025rem solid #e4e4e4;
+                        text-indent: .25rem;
+                        flex: auto;
+                        text-align: left;
+                        justify-content: space-between;
+                    }
+                }
+            }
+        }
+    }
+    .sort_icon{
+        vertical-align: middle;
+        transition: all 0.3s;
+        fill: #666;
+    }
+}
+.choose_type{
+    .sort_item_container{
+        .category_title{
+            color: #3190e8;
+        }
+        .sort_icon{
+            transform: rotate(180deg);
+            fill: #3190e8;
         }
     }
 }
