@@ -27,12 +27,12 @@
                 </div>
             </div>
             <section class="sort_detail_type" v-show="sortBy == 'sort'">
-                <ul class="sort_list_container">
+                <ul class="sort_list_container" @click="sortList($event)">
                     <li class="sort_list_li">
                         <svg>
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#default"></use>
                         </svg>
-                        <p class="sort_select">
+                        <p data ="0" :class="{sort_select: sortByType == 0}">
                             <span>智能排序</span>
                             <svg v-if="sortByType == 0">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
@@ -43,9 +43,9 @@
                         <svg>
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#distance"></use>
                         </svg>
-                        <p class="sort_select">
+                        <p data = "5" :class="{sort_select: sortByType == 5}">
                             <span>距离最近</span>
-                            <svg v-if="sortByType == 0">
+                            <svg v-if="sortByType == 5">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                             </svg>
                         </p>
@@ -54,9 +54,9 @@
                         <svg>
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hot"></use>
                         </svg>
-                        <p class="sort_select">
+                        <p data = "6" :class="{sort_select: sortByType == 6}">
                             <span>销量最高</span>
-                            <svg v-if="sortByType == 0">
+                            <svg v-if="sortByType == 6">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                             </svg>
                         </p>
@@ -65,9 +65,9 @@
                         <svg>
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#price"></use>
                         </svg>
-                        <p class="sort_select">
+                        <p data = "1" :class="{sort_select: sortByType == 1}">
                             <span>起送价最低</span>
-                            <svg v-if="sortByType == 0">
+                            <svg v-if="sortByType == 1">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                             </svg>
                         </p>
@@ -76,9 +76,9 @@
                         <svg>
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#speed"></use>
                         </svg>
-                        <p class="sort_select">
+                        <p data = "2" :class="{sort_select: sortByType == 2}">
                             <span>配送速度最快</span>
-                            <svg v-if="sortByType == 0">
+                            <svg v-if="sortByType == 2">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                             </svg>
                         </p>
@@ -87,9 +87,9 @@
                         <svg>
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#rating"></use>
                         </svg>
-                        <p class="sort_select">
+                        <p data = "3" :class="{sort_select: sortByType == 3}">
                             <span>评分最高</span>
-                            <svg v-if="sortByType == 0">
+                            <svg v-if="sortByType == 3">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                             </svg>
                         </p>
@@ -98,9 +98,9 @@
             </section>
         </section>
         <!-- 筛选 -->
-        <section class="sort_item">
-            <div class="sort_item_container">
-                <span>筛选</span>
+        <section class="sort_item" :class="{choose_type:sortBy == 'activity'}">
+            <div class="sort_item_container" @click="chooseType('activity')">
+                <span :class="{category_title:sortBy == 'activity'}">筛选</span>
                 <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg" version="1.1" class="sort_icon">
                     <polygon points="0,3 10,3 5,8"/>
                 </svg>
@@ -128,6 +128,7 @@ import { mapMutations,mapState } from "vuex";
           restaurant_category_id: "", // 食品类型id值
           sortBy: "",    //筛选条件
           sortByType:null, // 根据何种方式排序
+          Activity:null,
       }
     },
     created() {
@@ -156,13 +157,25 @@ import { mapMutations,mapState } from "vuex";
                 this.RECORD_ADDRESS(res);
             }
         },
-         chooseType(type){
+        chooseType(type){
             if (this.sortBy !== type) {
                 this.sortBy = type;
             } else {
                 this.sortBy = "";
             }
         },
+        //点击某个排序方式，获取事件对象的data值，并根据获取的值重新获取数据渲染
+        sortList(event){
+            let node;
+            // 如果点击的是 span 中的文字，则需要获取到 span 的父标签 p
+            if (event.target.nodeName.toUpperCase() !== "P") {
+                node = event.target.parentNode;
+            } else {
+                node = event.target;
+            }
+            this.sortByType = node.getAttribute("data");
+            this.sortBy = "";
+        }
     },
     components: {
         headTop,
@@ -205,7 +218,13 @@ import { mapMutations,mapState } from "vuex";
                 border-right: .025rem solid #e4e4e4;                
             }
         }
-        .sort_detail_type{
+    }
+    .sort_icon{
+        vertical-align: middle;
+        transition: all 0.3s;
+        fill: #666;
+    }
+    .sort_detail_type{
             position: absolute;
             top: 1.6rem;
             width: 100%;
@@ -213,7 +232,9 @@ import { mapMutations,mapState } from "vuex";
             background-color: #fff;
             border-top: 0.025rem solid #e4e4e4;
             display: flex;
-            .sort_list_container{
+           
+        }
+         .sort_list_container{
                 width: 100%;
                 .sort_list_li{
                     display: flex;
@@ -233,16 +254,16 @@ import { mapMutations,mapState } from "vuex";
                         flex: auto;
                         text-align: left;
                         justify-content: space-between;
+                        span{
+                            color: #666;
+                        }
+                    }
+                    .sort_select{
+                        span
+                        {color: #3190e8;}
                     }
                 }
             }
-        }
-    }
-    .sort_icon{
-        vertical-align: middle;
-        transition: all 0.3s;
-        fill: #666;
-    }
 }
 .choose_type{
     .sort_item_container{
@@ -255,4 +276,5 @@ import { mapMutations,mapState } from "vuex";
         }
     }
 }
+
 </style>

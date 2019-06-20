@@ -53,7 +53,7 @@ export default {
   methods: {
     async searchTarget(historyValue){
       if (historyValue) {
-        this.searchValue = this.historyValue;
+        this.searchValue = historyValue;
       }else if (!this.searchValue) {
         return
       }
