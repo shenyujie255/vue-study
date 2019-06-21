@@ -105,7 +105,42 @@
                     <polygon points="0,3 10,3 5,8"/>
                 </svg>
             </div>
-            <section class="sort_detail_type category_container"></section>
+            <section class="sort_detail_type filter_container" v-show="sortBy =='activity'">
+                <section style="width:100%;">
+                    <header class="filter_header_style">配送方式</header>
+                    <ul class="filter_ul">
+                        <li class="filter_li">
+                            <svg></svg>
+                            <span></span>
+                        </li>
+                    </ul>
+                </section>
+                <section style="width:100%;">
+                    <header class="filter_header_style">商家属性（可以多选）</header>
+                    <ul class="filter_ul" style="padding-bottom:0.5rem;">
+                        <li class="filter_li">
+                            <svg></svg>
+                            <span></span>
+                        </li>
+                        <li class="filter_li">
+                            <svg></svg>
+                            <span></span>
+                        </li>
+                        <li class="filter_li">
+                            <svg></svg>
+                            <span></span>
+                        </li>
+                        <li class="filter_li">
+                            <svg></svg>
+                            <span></span>
+                        </li>
+                    </ul>
+                </section>
+                <footer class="confirm_filter">
+                    <div class="filter_button_style clear_all">清空</div>
+                    <div class="filter_button_style confirm_select">确定</div>
+                </footer>
+            </section>
         </section>
     </section>
     <section class="sort_list_container">
@@ -232,38 +267,98 @@ import { mapMutations,mapState } from "vuex";
             background-color: #fff;
             border-top: 0.025rem solid #e4e4e4;
             display: flex;
-           
-        }
-         .sort_list_container{
-                width: 100%;
-                .sort_list_li{
-                    display: flex;
-                    align-items: center;
-                    height: 2.5rem;
-                    svg{
-                        width: .7rem;
-                        height: .7rem;
-                        margin: 0 0.3rem 0 0.8rem;
-                    }
-                    p{
-                        line-height: 2.5rem;
-                        display: flex;
-                        align-items: center;
-                        border-bottom: .025rem solid #e4e4e4;
-                        text-indent: .25rem;
-                        flex: auto;
-                        text-align: left;
-                        justify-content: space-between;
-                        span{
-                            color: #666;
-                        }
-                    }
-                    .sort_select{
-                        span
-                        {color: #3190e8;}
-                    }
+    }
+    .sort_list_container{
+        width: 100%;
+        .sort_list_li{
+            display: flex;
+            align-items: center;
+            height: 2.5rem;
+            svg{
+                width: .7rem;
+                height: .7rem;
+                margin: 0 0.3rem 0 0.8rem;
+            }
+            p{
+                line-height: 2.5rem;
+                display: flex;
+                align-items: center;
+                border-bottom: .025rem solid #e4e4e4;
+                text-indent: .25rem;
+                flex: auto;
+                text-align: left;
+                justify-content: space-between;
+                span{
+                    color: #666;
                 }
             }
+            .sort_select{
+                span
+                {color: #3190e8;}
+            }
+        }
+    }
+    .filter_container{
+        flex-direction: column;
+        align-items: flex-start;
+        background-color: #f1f1f1;
+        // min-height: 10.6rem;
+        .filter_header_style{
+            text-align: left;
+            padding-left: .5rem;
+            background-color: #fff;
+            height: 1.5rem;
+            line-height: 1.5rem;
+            @include sc(.4rem,#333);
+        }
+        .filter_ul{
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0 0.5rem;
+            background-color: #fff;
+            .filter_li{
+                display: flex;
+                align-items: center;
+                border: 0.025rem solid #eee;
+                @include wh(4.7rem, 1.4rem);
+                margin-right: 0.25rem;
+                border-radius: 0.125rem;
+                padding: 0 0.25rem;
+                margin-bottom: 0.25rem;
+                svg{
+                    width: .8rem;
+                    height: .8rem;
+                    margin-right: .125rem;
+                }
+                span{
+                    @include sc(.4rem,#333);
+                }
+            }
+        }
+        .confirm_filter{
+            display: flex;
+            width: 100%;
+            background-color: #f1f1f1;
+            padding: .3rem 0.2rem;
+            .filter_button_style{
+                width: 50%;
+                height:1.8rem;
+                line-height: 1.8rem;
+                font-size: .8rem;
+                border-radius: .2rem;
+            }
+            .clear_all{
+                background-color: #fff;
+                margin-right: .5rem;
+                border: .025rem solid #fff;
+            }
+            .confirm_select{
+                background-color: #56d176;
+                color: #fff;
+                border: .025rem solid #56d176;
+            }
+        }
+    }
 }
 .choose_type{
     .sort_item_container{
