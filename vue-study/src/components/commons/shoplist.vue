@@ -62,7 +62,7 @@ import { mapState } from "vuex";
     components:{
       ratingStar,
     },
-    props: ['geohash'],
+    props: ['geohash', 'sortByType', 'deliveryMode', 'supportIds', 'confirmSelect',],
     computed: {
       ...mapState([
         'latitude','longitude'

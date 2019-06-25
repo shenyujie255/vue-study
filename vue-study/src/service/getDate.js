@@ -80,7 +80,7 @@ export const misteFoodTypes = geohash => get('/v2/index_entry',{
 /**
  * 获取服务中心热门问题
  */
-export const getService = () => get('/v3/profile/explain')
+export const getService = () => get('/v3/profile/explain');
 
 /**
  * 退出登录
@@ -92,4 +92,21 @@ export const searchRestaurant = (geohash,keyword) => get('/v4/restaurants',{
 	geohash,
 	keyword,
 	type: 'search'
+});
+/**
+ * 筛选列表的配送方式
+ */
+export const foodDelivery =(latitude,longitude) => get('/shopping/v1/restaurants/delivery_modes',{
+	latitude,
+	longitude,
+	kw: ''
+});
+
+/**
+ * 筛选列表的商家属性
+ */
+export const foodActivity = (latitude,longitude) => get('/shopping/v1/restaurants/activity_attributes',{
+	latitude,
+	longitude,
+	kw: ''
 })
