@@ -188,7 +188,7 @@ import { mapMutations,mapState } from "vuex";
             this.restaurant_category_id = this.$route.query.restaurant_category_id;
             //防止刷新页面时，vuex状态丢失，经度纬度需要重新获取，并存入vuex
             if (!this.latitude) {
-                // console.log(Number(!this.latitude))
+                console.log(Number(!this.latitude))
                 //获取位置信息
                 let res = await misteAddress(this.geohash);
                 // 记录当前经纬度存入vuex

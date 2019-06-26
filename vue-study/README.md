@@ -62,6 +62,10 @@ npm run dev
 
 <img src="./src/assets/foodlist.png" width="365" height="619"/>
 
+### 食品页
+
+<img src="./src/assets/food.png" width="365" height="619"/>
+<img src="./src/assets/food1.png" width="365" height="619"/>
 # 项目布局
 
 ```
