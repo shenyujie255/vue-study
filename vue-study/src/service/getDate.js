@@ -110,3 +110,10 @@ export const foodActivity = (latitude,longitude) => get('/shopping/v1/restaurant
 	longitude,
 	kw: ''
 })
+/**
+ * 获取food页面的 category 种类列表
+ */
+export const foodCategory = (latitude,longitude) => get('/shopping/v2/restaurant/category',{
+	latitude,
+	longitude 
+})

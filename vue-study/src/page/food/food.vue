@@ -13,11 +13,29 @@
                 </div>
             </div>
             <section class="sort_detail_type category_container" v-show="sortBy == 'food'">
-                <section class="categroy_left">
-                    1
+                <section class="category_left">
+                    <ul>
+                        <li class="category_left_li" v-for="(item, index) in category" :key="index" :class="{category_active:restaurant_category_id == item.id}" @click="selectCategoryName(item.id,index)">
+                            <section>
+                                <img :src="getImgPath(item.image_url)" v-if="index" class="category_icon">
+                                <span>{{item.name}}</span>
+                            </section>
+                            <section>
+                                <span class="category_count">{{item.count}}</span>
+                                <svg v-if="index" width="8" height="8" xmlns="http://www.w3.org/2000/svg" version="1.1" class="category_arrow" >
+                                    <path d="M0 0 L6 4 L0 8"  stroke="#bbb" stroke-width="1" fill="none"/>
+                                </svg>
+                            </section>
+                        </li>
+                    </ul>
                 </section>
-                <section class="categroy_right">
-                    2
+                <section class="category_right">
+                    <ul>
+                        <li class="category_right_li" v-for="(item, index) in categoryDetail" :key="index" v-if="index" @click="getCategoryIds(item.id,item.name)">
+                            <span>{{item.name}}</span>
+                            <span>{{item.count}}</span>
+                        </li>
+                    </ul>
                 </section>
             </section>
         </section>
@@ -150,7 +168,8 @@
 <script>
 import headTop from '../../components/head/head'
 import shopList from '../../components/commons/shoplist'
-import { misteAddress,foodDelivery,foodActivity } from '../../service/getDate';
+import { misteAddress,foodDelivery,foodActivity,foodCategory } from '../../service/getDate';
+import { getImgPath } from "../../components/commons/mixin";
 import { mapMutations,mapState } from "vuex";
   export default {
     data () {
@@ -158,7 +177,8 @@ import { mapMutations,mapState } from "vuex";
           headTitle: '',    // miste页面头部标题
           geohash: "",  // city页面传递过来的地址geohash
           foodTitle: "",   // 排序左侧头部标题
-          restaurant_category_id: "", // 食品类型id值
+          restaurant_category_id: "", //食品类型id值
+          restaurant_category_ids: "", //筛选类型的id
           sortBy: "",    //筛选条件
           sortByType: null, // 根据何种方式排序
           Activity: null,   // 商家支持活动数据
@@ -166,6 +186,8 @@ import { mapMutations,mapState } from "vuex";
           delivery_mode: null, // 选中的配送方式
           filterNum: 0,
           support_ids: [], 
+          category: null, //分类左侧数据
+          categoryDetail: null, //分类右侧数据
       }
     },
     created() {
@@ -194,14 +216,24 @@ import { mapMutations,mapState } from "vuex";
                 // 记录当前经纬度存入vuex
                 this.RECORD_ADDRESS(res);
             }
+            // 获取food分类数据
+            this.category = await foodCategory(this.latitude,this.longitude);
+            this.category.forEach(item=>{
+                if (this.restaurant_category_id == item.id) {
+                    this.categoryDetail = item.sub_categories;
+                    console.log(this.categoryDetail);
+                    
+                }
+            })
             // 获取筛选列表配送方式
             this.Delivery = await foodDelivery(this.latitude,this.longitude)
             // 获取筛选列表商家属性
             this.Activity = await foodActivity(this.latitude,this.longitude)
-            console.log(this.Activity);
             //记录support_ids的状态，默认不选中，点击状态取反，status为true时为选中状态
             this.Activity.forEach((item, index) => {
-            this.support_ids[index] = { status: false, id: item.id };
+            this.support_ids[index] = { status: false, id: item.id }
+            
+            
       });
         },
         chooseType(type){
@@ -268,12 +300,30 @@ import { mapMutations,mapState } from "vuex";
         },
         confirmSelectFun(){
             this.sortBy = "";
+        },
+        //选中Category左侧列表的某个选项时，右侧渲染相应的sub_categories列表
+        selectCategoryName(id,index){
+            //第一个选项 -- 全部商家 因为没有自己的列表，所以点击则默认获取选所有数据
+            if (index === 0) {
+                this.restaurant_category_ids = null;
+                this.sortBy = "";
+            } else {//不是第一个选项时，右侧展示其子级sub_categories的列表
+                this.restaurant_category_id = id;
+                this.categoryDetail = this.category[index].sub_categories;
+            }
+        },
+        //选中Category右侧列表的某个选项时，进行筛选，重新获取数据并渲染
+        getCategoryIds(id,name){
+            this.restaurant_category_ids = id;
+            this.sortBy = "";
+            this.foodTitle = this.headTitle = name;
         }
     },
     components: {
         headTop,
         shopList
-    }
+    },
+    mixins: [getImgPath],
   }
 </script>
 
@@ -431,6 +481,62 @@ import { mapMutations,mapState } from "vuex";
                 border: .025rem solid #56d176;
                 span{
                     color: #fff;
+                }
+            }
+        }
+    }
+    .category_container{
+        .category_left{
+            flex: 1;
+            background-color: #f1f1f1;
+            height: 16rem;
+            overflow-y:auto;
+            span{
+                @include sc(.5rem,#666);
+                line-height: 1.8rem;
+            }
+            .category_left_li{
+                justify-content: space-between;
+                display: flex;
+                padding:0 .5rem;
+                .category_icon{
+                    width: .8rem;
+                    height: .8rem;
+                    vertical-align: middle;
+                    margin-right: .2rem;
+                }
+                .category_count{
+                    background-color: #ccc;
+                    @include sc(.4rem,#fff);
+                    border-radius: .8rem;
+                    padding: 0 .1rem;
+                    border: .025rem solid #ccc;
+                    vertical-align: middle;
+                    margin-right: .25rem;
+                }
+                .category_arrow{
+                    vertical-align: middle;
+                }
+            }
+            .category_active {
+                background-color: #fff;
+            }
+        }
+        .category_right{
+            flex: 1;
+            background-color: #fff;
+            height: 16rem;
+            overflow-y:auto;
+            padding-left: .5rem;
+            .category_right_li{
+                display: flex;
+                justify-content: space-between;
+                padding-right: .5rem;
+                height: 1.8rem;
+                line-height: 1.8rem;
+                border-bottom: .025rem solid #e4e4e4;
+                span{
+                    color: #666;
                 }
             }
         }
