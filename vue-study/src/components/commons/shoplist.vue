@@ -74,6 +74,7 @@ import { mapState } from "vuex";
         let res = await shopList(this.latitude,this.longitude,this.offset, this.restaurantCategoryId);
         this.shopListArr = [...res];
       },
+      //监听父级传来的数据发生变化时，触发此函数重新根据属性值获取数据
       async listenPropChange(){
         this.offset = 0;
         let res = await shopList(this.latitude,this.longitude,this.sortByType,this.restaurantCategoryIds,this.deliveryMode,this.supportIds);
