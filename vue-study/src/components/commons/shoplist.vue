@@ -1,6 +1,6 @@
 <template>
   <div class="shoplist_container">
-    <ul>
+    <ul v-if="shopListArr.length" type="1">
       <router-link  :to="{path: 'shop', query:{geohash, id:item.id}}" class="shop_li" tag="li" v-for="item in shopListArr" :key="item.id">
         <section>
           <img :src="imgBaseUrl + item.image_path" alt="" class="shop_img">
@@ -52,6 +52,7 @@ import { mapState } from "vuex";
   export default {
     data () {
       return {
+        offset: 0,  // 批次加载店铺列表，每次加载20个 limit = 20
         shopListArr:[], //店铺列表
         imgBaseUrl: '//elm.cangdu.org/img/', //图片域名地址
       }
@@ -62,7 +63,7 @@ import { mapState } from "vuex";
     components:{
       ratingStar,
     },
-    props: ['geohash', 'sortByType', 'deliveryMode', 'supportIds', 'confirmSelect',],
+    props: ['restaurantCategoryId', 'restaurantCategoryIds', 'sortByType','geohash',  'deliveryMode', 'supportIds', 'confirmSelect',],
     computed: {
       ...mapState([
         'latitude','longitude'
@@ -70,10 +71,29 @@ import { mapState } from "vuex";
     },
     methods: {
       async initData(){
-        let res = await shopList(this.latitude,this.longitude);
+        let res = await shopList(this.latitude,this.longitude,this.offset, this.restaurantCategoryId);
+        this.shopListArr = [...res];
+      },
+      async listenPropChange(){
+        this.offset = 0;
+        let res = await shopList(this.latitude,this.longitude,this.sortByType,this.restaurantCategoryIds,this.deliveryMode,this.supportIds);
         this.shopListArr = [...res];
       }
-    }
+    },
+    watch: {
+      //监听父级传来的restaurantCategoryIds，当值发生变化的时候重新获取餐馆数据，作用于排序和筛选
+      restaurantCategoryIds:function (value) {
+        this.listenPropChange();
+      },
+      //监听父级传来的排序方式
+      sortByType:function (value) {
+        this.listenPropChange();
+      },
+      //监听父级的确认按钮是否被点击，并且返回一个自定义事件通知父级，已经接收到数据，此时父级才可以清除已选状态
+      confirmSelect: function (value){
+        this.listenPropChange();
+      }
+    },
   }
 </script>
 

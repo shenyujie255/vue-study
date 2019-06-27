@@ -160,7 +160,7 @@
         </section>
     </section>
     <section class="sort_list_container">
-        <shop-list v-if="latitude"></shop-list>
+        <shop-list v-if="latitude" :geohash="geohash" :restrurantCategoryId="restaurant_category_id" :restaurantCategoryIds="restaurant_category_ids" :sortByType='sortByType' :deliveryMode="delivery_mode" :confirmSelect="confirmStatus" :supportIds="support_ids"></shop-list>
     </section>
 </div>
 </template>
@@ -188,6 +188,7 @@ import { mapMutations,mapState } from "vuex";
           support_ids: [], 
           category: null, //分类左侧数据
           categoryDetail: null, //分类右侧数据
+          confirmStatus: false // 确认选择
       }
     },
     created() {
@@ -210,7 +211,6 @@ import { mapMutations,mapState } from "vuex";
             this.restaurant_category_id = this.$route.query.restaurant_category_id;
             //防止刷新页面时，vuex状态丢失，经度纬度需要重新获取，并存入vuex
             if (!this.latitude) {
-                console.log(Number(!this.latitude))
                 //获取位置信息
                 let res = await misteAddress(this.geohash);
                 // 记录当前经纬度存入vuex
@@ -221,8 +221,6 @@ import { mapMutations,mapState } from "vuex";
             this.category.forEach(item=>{
                 if (this.restaurant_category_id == item.id) {
                     this.categoryDetail = item.sub_categories;
-                    console.log(this.categoryDetail);
-                    
                 }
             })
             // 获取筛选列表配送方式
@@ -299,6 +297,7 @@ import { mapMutations,mapState } from "vuex";
             this.filterNum = 0;
         },
         confirmSelectFun(){
+            this.confirmStatus = !this.confirmStatus;
             this.sortBy = "";
         },
         //选中Category左侧列表的某个选项时，右侧渲染相应的sub_categories列表
