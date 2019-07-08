@@ -69,21 +69,25 @@ export default {
           sortobj[String.fromCharCode(i)] = this.groupcity[String.fromCharCode(i)];
         } 
       } return sortobj
+      console.log(sortobj);
+      
     }
     },
   mounted(){
       // 获取当前城市
       cityGuess().then(res => {
           this.guessCity = res.name;
+          console.log(res);
           this.guessCityid = res.id;
       })
       //获取所有城市
       groupcity().then(res=>{
-          this.groupcity = res;
+          this.groupcity = res;  
+           
       });
       //获取热门城市
       hotcity().then(res=>{
-          this.hotcity = res;  
+          this.hotcity = res;
       })
       
     },
