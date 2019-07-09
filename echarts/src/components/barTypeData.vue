@@ -35,8 +35,8 @@ export default {
           containLabel:true
         },
         xAxis: {
-            type: 'category',
-            data: ['周一','周二','周三','周四','周五','周六','周日']
+          type: 'category',
+          data: ['周一','周二','周三','周四','周五','周六','周日']
         },
         yAxis: {
           type: 'value',
@@ -93,8 +93,8 @@ export default {
     }
   },
   watch: {
-    id: ()=>{
-      this.readyBarOption();
+    id: (v)=>{
+      this.readyBarOption(v);
     }
   },
 }
