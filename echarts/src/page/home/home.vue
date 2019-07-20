@@ -1,6 +1,6 @@
 <template>
     <div id="home">
-        <header></header>
+        <header-nav></header-nav>
         <main class="content">
             <div class="bread">
                 <span class="bread_bar">
@@ -11,14 +11,16 @@
                 </el-breadcrumb>
             </div>
             <home-page></home-page>
-        </main>
-        <footer></footer>
+        </main>    
+        <footer></footer>   
         
     </div>
 </template>
 
 <script>
 import HomePage from '../index'
+import headerNav from '../../components/header/headerNav'
+import leftNav from '../../components/leftNav/leftNav'
   export default {
     data () {
       return {
@@ -28,7 +30,9 @@ import HomePage from '../index'
 
     },
     components:{
-        HomePage
+        HomePage,
+        headerNav,
+        leftNav
     }
   }
 </script>
@@ -46,5 +50,10 @@ import HomePage from '../index'
         height: 30px;
         line-height: 30px;
     }
+}
+.left_nav{
+    position: fixed;
+    top: 60px;
+    left: 0;
 }
 </style>
