@@ -1,16 +1,23 @@
 <template>
 <div class="home-container">
-    <h1>你好</h1>
+    <head-top></head-top>
+    <sider-bar></sider-bar>
 </div>
 </template>
 
 <script>
+import headTop from '../../components/header/head'
+import siderBar from '../../components/commons/siderBar'
   export default {
     data () {
       return {
       }
     },
     methods: {
+    },
+    components: {
+      headTop,
+      siderBar
     }
   }
 </script>

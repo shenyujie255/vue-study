@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { setStore } from "../../utils/mUtils";
   export default {
     data () {
       return {
@@ -48,7 +49,8 @@
         submitForm(formName){
             this.$refs[formName].validate((valid) => {
             if (valid) {
-                alert('submit!');
+                setStore('ms_username',this.ruleForm.username);
+                this.$router.push('/home');
             } else {
                 console.log('error submit!!');
                 return false;

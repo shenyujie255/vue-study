@@ -10,8 +10,15 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
-
+    proxyTable: {
+      "/api":{ //设置代理
+        target: '  https://easy-mock.com/mock/5d347c2acd16e76ecafc2038/admin',  //接口地址
+        changeOrigin: true, // 支持跨域
+        pathRewrite: { // 重写路径: 去掉路径中开头的'/api'
+          '^/api': '/'
+        }
+      }
+    },
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
