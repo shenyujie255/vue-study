@@ -1,7 +1,7 @@
 <template>
 <div class="header">
     <div class="head_left">
-      <div class="collapse_menu">
+      <div class="collapse_menu" @click="collapseChange">
         <i class="el-icon-menu"></i>
       </div>
       <div class="logo">后台管理系统</div>
@@ -16,7 +16,7 @@
       <div class="user_avator"><img src="../../assets/logo.png" alt=""></div>
       <el-dropdown class="user_name" trigger="click" @command="handleCommand">
         <span class="el-dropdown-link">
-          名字<i class="el-icon-arrow-down el-icon--right"></i>
+          用户名<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="a">黄金糕</el-dropdown-item>
@@ -30,11 +30,13 @@
 </template>
 
 <script>
+// 引入公共的bus，来做为中间传达的工具
+import bus from '../../components/commons/bus'
 import { removeStore } from '../../utils/mUtils';
   export default {
     data () {
       return {
-        collapse: false,
+        collapse: false,  //false展开
         fullscreen: false,
       }
     },
@@ -76,7 +78,18 @@ import { removeStore } from '../../utils/mUtils';
               this.$router.push('/login');
           }
       },
-    }
+      // 折叠侧边栏
+      collapseChange(){
+        this.collapse = !this.collapse;
+        console.log(this.collapse);
+        bus.$emit('collapse',this.collapse);
+      }
+    },
+    mounted() {
+      if(document.body.clientWidth < 1500){
+          this.collapseChange();
+      }
+    },
   }
 </script>
 
@@ -88,12 +101,13 @@ import { removeStore } from '../../utils/mUtils';
   align-items: center;
   font-size: 22px;
   color: #fff;
-  background-color: #11b0f2;
+  background-color: #056b8d;
 }
 .head_left{
     @include fj(space-between);
     .collapse_menu{
       padding: 0 21px;
+      cursor: pointer;
     }
     .logo{
     }
@@ -118,6 +132,7 @@ import { removeStore } from '../../utils/mUtils';
     }
   }
   .user_name{
+    color: #000;
   }
 }
 </style>

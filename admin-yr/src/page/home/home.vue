@@ -2,6 +2,13 @@
 <div class="home-container">
     <head-top></head-top>
     <sider-bar></sider-bar>
+    <main class="content_box" >
+        <div class="content">
+            <transition name="move" mode="out-in">
+              <router-view></router-view>
+            </transition>
+        </div>
+    </main>
 </div>
 </template>
 
@@ -23,5 +30,9 @@ import siderBar from '../../components/commons/siderBar'
 </script>
 
 <style lang='scss' scoped>
-
+.content_box{
+  position: absolute;
+  right: 0;
+  left: 250px;
+}
 </style>
