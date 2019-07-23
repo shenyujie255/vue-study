@@ -71,7 +71,6 @@ import { itemDate } from "../../service/getDate";
     left: 0;
     top: 70px;
     bottom:0;
-    overflow-y: scroll;
     background-color: #04516a;
 }
 .sidebar::-webkit-scrollbar{
