@@ -34,5 +34,14 @@ import siderBar from '../../components/commons/siderBar'
   position: absolute;
   right: 0;
   left: 250px;
+  background-color: #f0f0f0;
+  bottom: 0;
+  top: 70px;
+  .content{
+    width: auto;
+    height: 100%;
+    overflow-y: scroll;
+    padding: 10px;
+  }
 }
 </style>
