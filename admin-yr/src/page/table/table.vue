@@ -33,7 +33,7 @@
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination background layout="prev, pager, next" :total="1000">
+        <el-pagination @current-change="handleCurrentChange" background layout="prev, pager, next" :total="1000" >
         </el-pagination>
       </div>
     </div>
@@ -44,24 +44,40 @@
 <script>
 import { tableDate } from "../../service/getDate";
   export default {
+    name: 'table',
     data () {
       return {
-        search_input:'',
-        tableData:[],
+        search_input:'',  //搜索内容
+        tableData: [],  //表格数据
+        cur_page: 1,  //分页导航
+        multipleSelection: [],  //选中状态时的数组
       }
     },
     mounted () {
       this.initData();
     },
     methods: {
+      // 获取mock模拟数据
       async initData(){
-        let date = await tableDate().then(res=>{
-          this.tableData = res.tableData;
-          console.log(this.tableData);
+        let date = await tableDate({
+          page: this.cur_page,
+          }).then(res=>{
+          this.tableData = res.data;
+          console.log(res);
         })
       },
+      // 分页导航
+      handleCurrentChange(val){
+        this.cur_page = val;
+        this.initData();
+      },
+      // 选项发生变化时触发
       handleSelectionChange(){
-        
+        this.multipleSelection = val;
+      },
+      // 删除单个
+      handleDelete(){
+
       }
     },
     computed: {

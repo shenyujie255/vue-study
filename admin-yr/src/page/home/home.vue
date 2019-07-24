@@ -2,7 +2,8 @@
 <div class="home-container">
     <head-top></head-top>
     <sider-bar></sider-bar>
-    <main class="content_box" >
+    <main class="content_box" :class="{'content_collapse':collapse}">
+        <tag-nav></tag-nav>
         <div class="content">
             <transition name="move" mode="out-in">
               <router-view></router-view>
@@ -15,16 +16,25 @@
 <script>
 import headTop from '../../components/header/head'
 import siderBar from '../../components/commons/siderBar'
+import Bus from '../../components/commons/bus'
+import tagNav from '../../components/commons/tags'
   export default {
     data () {
       return {
+        collapse: false,
       }
     },
     methods: {
     },
     components: {
       headTop,
-      siderBar
+      siderBar,
+      tagNav
+    },
+    created() {
+      Bus.$on('collapse',msg => {
+        this.collapse = msg;
+      })
     }
   }
 </script>
@@ -43,5 +53,8 @@ import siderBar from '../../components/commons/siderBar'
     overflow-y: scroll;
     padding: 10px;
   }
+}
+.content_collapse{
+  left: 65px;
 }
 </style>

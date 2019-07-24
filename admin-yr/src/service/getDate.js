@@ -6,5 +6,4 @@ export const itemDate = () => get('/api/item',{
 
 export const tableDate = (query) => post('/table',{
     data: query
-
 })

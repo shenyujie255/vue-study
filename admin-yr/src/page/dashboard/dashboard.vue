@@ -5,7 +5,7 @@
 
 <script>
   export default {
-    name:'tabs',
+    name: 'dashboard',
     data () {
       return {
       }

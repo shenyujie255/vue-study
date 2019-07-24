@@ -27,7 +27,9 @@ html,body{
     background-color: #F5F5F5;
     overflow: hidden;
 }
-
+a{
+    cursor: pointer;
+}
 
 .clear:after{
     content: '';
