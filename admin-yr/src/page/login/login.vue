@@ -50,7 +50,7 @@ import { setStore } from "../../utils/mUtils";
             this.$refs[formName].validate((valid) => {
             if (valid) {
                 setStore('ms_username',this.ruleForm.username);
-                this.$router.push('/home');
+                this.$router.push('/');
             } else {
                 console.log('error submit!!');
                 return false;

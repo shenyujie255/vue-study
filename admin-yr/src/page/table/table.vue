@@ -1,6 +1,6 @@
 <template>
 <div class="table_container">
-  <div class="table">
+  <div class="table_box">
     <!-- 表格头部 -->
     <div class="table_head">
       <el-breadcrumb separator="/">
@@ -10,7 +10,7 @@
     <div class="table_content">
       <!-- 操作 -->
       <div class="operate">
-          <el-button type="primary" icon="el-icon-delete">批量删除</el-button>
+          <el-button type="primary" icon="el-icon-delete" @click="delAll">批量删除</el-button>
           <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="search_input" class="select_input">
           </el-input>
           <el-button type="primary" icon="el-icon-search">搜索</el-button>
@@ -44,13 +44,14 @@
 <script>
 import { tableDate } from "../../service/getDate";
   export default {
-    name: 'table',
+    name: 'basetable',
     data () {
       return {
         search_input:'',  //搜索内容
         tableData: [],  //表格数据
         cur_page: 1,  //分页导航
         multipleSelection: [],  //选中状态时的数组
+        del_list: [],
       }
     },
     mounted () {
@@ -63,7 +64,6 @@ import { tableDate } from "../../service/getDate";
           page: this.cur_page,
           }).then(res=>{
           this.tableData = res.data;
-          console.log(res);
         })
       },
       // 分页导航
@@ -72,12 +72,20 @@ import { tableDate } from "../../service/getDate";
         this.initData();
       },
       // 选项发生变化时触发
-      handleSelectionChange(){
+      handleSelectionChange(val){
         this.multipleSelection = val;
+        console.log(this.multipleSelection);
+        
       },
       // 删除单个
       handleDelete(){
 
+      },
+      formatter(row, column) {
+          return row.address;
+      },
+      delAll(){
+        this.multipleSelection = [];
       }
     },
     computed: {
@@ -92,7 +100,7 @@ import { tableDate } from "../../service/getDate";
   width: 100%;
   font-size: 14px;
 }
-.table{
+.table_box{
   .table_head{
     margin: 10px 0;
     .yrbiaoge{

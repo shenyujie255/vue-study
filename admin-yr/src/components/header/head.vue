@@ -132,7 +132,7 @@ import { removeStore } from '../../utils/mUtils';
     }
   }
   .user_name{
-    color: #000;
+    color:#fff;
   }
 }
 </style>
