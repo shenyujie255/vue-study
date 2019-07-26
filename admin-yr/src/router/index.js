@@ -15,7 +15,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/table',
+      redirect: '/dashboard',
     },
     {
        path: '/login', component: Login

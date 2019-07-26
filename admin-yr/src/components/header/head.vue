@@ -4,7 +4,7 @@
       <div class="collapse_menu" @click="collapseChange">
         <i class="el-icon-menu"></i>
       </div>
-      <div class="logo">后台管理系统</div>
+      <div class="logo">依然ADMIN</div>
     </div>
     <div class="head_right">
       <!-- 全屏显示 -->
