@@ -37,6 +37,33 @@
         </el-pagination>
       </div>
     </div>
+    <!-- 编辑弹出框 -->
+    <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
+        <el-form ref="form" :model="form" label-width="50px">
+            <el-form-item label="日期">
+                <el-date-picker type="date" placeholder="选择日期" v-model="form.date" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
+            </el-form-item>
+            <el-form-item label="姓名">
+                <el-input v-model="form.name"></el-input>
+            </el-form-item>
+            <el-form-item label="地址">
+                <el-input v-model="form.address"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="editVisible = false">取 消</el-button>
+            <el-button type="primary" @click="saveEdit">确 定</el-button>
+        </span>
+    </el-dialog>
+
+    <!-- 删除提示框 -->
+    <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
+        <div class="del-dialog-cnt">删除不可恢复，是否确定删除？</div>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="delVisible = false">取 消</el-button>
+            <el-button type="primary" @click="deleteRow">确 定</el-button>
+        </span>
+    </el-dialog>
   </div>
 </div>
 </template>
@@ -52,9 +79,19 @@ import { tableDate } from "../../service/getDate";
         cur_page: 1,  //分页导航
         multipleSelection: [],  //选中状态时的数组
         del_list: [],
+        is_search: false,
+        editVisible: false,
+        delVisible: false,
+        form: {
+            name: '',
+            date: '',
+            address: ''
+        },
+        idx: 0,
+        id: -1
       }
     },
-    mounted () {
+    created () {
       this.initData();
     },
     methods: {
@@ -75,17 +112,66 @@ import { tableDate } from "../../service/getDate";
       handleSelectionChange(val){
         this.multipleSelection = val;
         console.log(this.multipleSelection);
-        
       },
       // 删除单个
-      handleDelete(){
-
+      handleDelete(index, row) {
+          this.idx = index;
+          this.id = row.id;
+          this.delVisible = true;
       },
       formatter(row, column) {
           return row.address;
       },
+      handleEdit(index, row) {
+          this.idx = index;
+          this.id = row.id;
+          this.form = {
+              id: row.id,
+              name: row.name,
+              date: row.date,
+              address: row.address
+          }
+          this.editVisible = true;
+      },
       delAll(){
-        this.multipleSelection = [];
+          const length = this.multipleSelection.length;
+          let str = '';
+          this.del_list = this.del_list.concat(this.multipleSelection);
+          for (let i = 0; i < length; i++) {
+              str += this.multipleSelection[i].name + ' ';
+          }
+          this.$message.error('删除了' + str);
+          this.multipleSelection = [];
+      },
+      // 保存编辑
+      saveEdit() {
+        this.editVisible = false;
+        this.$message.success(`修改第 ${this.idx+1} 行成功`);
+        if(this.tableData[this.idx].id === this.id){
+            this.$set(this.tableData, this.idx, this.form);
+        }else{
+          for(let i = 0; i < this.tableData.length; i++){
+              if(this.tableData[i].id === this.id){
+                  this.$set(this.tableData, i, this.form);
+                  return ;
+              }
+          }
+        }
+      },
+      // 确定删除
+      deleteRow(){
+          this.$message.success('删除成功');
+          this.delVisible = false;
+          if(this.tableData[this.idx].id === this.id){
+              this.tableData.splice(this.idx, 1);
+          }else{
+              for(let i = 0; i < this.tableData.length; i++){
+                  if(this.tableData[i].id === this.id){
+                      this.tableData.splice(i, 1);
+                      return ;
+                  }
+              }
+          }
       }
     },
     computed: {
