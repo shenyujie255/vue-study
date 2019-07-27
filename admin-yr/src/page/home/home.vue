@@ -6,7 +6,9 @@
         <tag-nav></tag-nav>
         <div class="content">
             <transition name="move" mode="out-in">
-              <router-view></router-view>
+                <keep-alive :include="tagList">
+                    <router-view ></router-view>
+                </keep-alive>
             </transition>
         </div>
     </main>
@@ -22,6 +24,7 @@ import tagNav from '../../components/commons/tags'
     data () {
       return {
         collapse: false,
+        tagList: [],
       }
     },
     methods: {
@@ -34,6 +37,14 @@ import tagNav from '../../components/commons/tags'
     created() {
       Bus.$on('collapse',msg => {
         this.collapse = msg;
+      }),
+      // 只有在标签页列表里的页面才使用keep-alive，即关闭标签之后就不保存到内存中了。
+      Bus.$on('tags', msg => {
+          let arr = [];
+          for(let i = 0, len = msg.length; i < len; i ++){
+              msg[i].name && arr.push(msg[i].name);
+          }
+          this.tagList = arr;
       })
     }
   }
@@ -56,5 +67,14 @@ import tagNav from '../../components/commons/tags'
 }
 .content_collapse{
   left: 65px;
+}
+.move-enter-active,
+.move-leave-active {
+    transition: opacity 3s;
+}
+
+.move-enter,
+.move-leave {
+    opacity: 0;
 }
 </style>

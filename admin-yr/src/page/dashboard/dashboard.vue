@@ -1,39 +1,41 @@
 <template>
 <div class="dashboard_container">
-  <div class="table_head">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item><i class="icon-font yrbiaoge"></i>基础表格</el-breadcrumb-item>
-      </el-breadcrumb>
+    <div class="table_head">
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item><i class="icon-font yrmenu-home-normal"></i>系统首页</el-breadcrumb-item>
+        </el-breadcrumb>
     </div>
-  <el-row :gutter="10" class="row_list">
-    <el-col :span="3"><div class="pay data_list"><p class="list_number">+208.65</p><p>盈亏(千万)</p></div></el-col>
-    <el-col :span="3"><div class="income data_list"><p class="list_number">+12.37</p><p>收益率(%)</p></div></el-col>
-    <el-col :span="3"><div class="hidden_investors data_list"><p class="number">686</p><p></p>潜在投资人(人)</div></el-col>
-    <el-col :span="3"><div class="intention_investors data_list"><p class="number">264</p><p>意向投资人(人)</p></div></el-col>
-    <el-col :span="3"><div class="waitpending_investors data_list"><p class="number">137</p><p>待审投资人(人))</p></div></el-col>
-    <el-col :span="3"><div class="pending_investors data_list"><p class="number">100</p><p></p>审核中投资人(人)</div></el-col>
-    <el-col :span="3"><div class="pass_investors data_list"><p class="number">86</p><p>审核通过投资人(人)</p></div></el-col>
-    <el-col :span="3"><div class="newadd_investors data_list"><p class="number">36</p><p>新增投资人(人)</p></div></el-col>
-  </el-row>
-  <el-row :gutter="10" class="row_list">
-    <el-col :span="12">
-      <bar-type-data id="bar_data"></bar-type-data>
-    </el-col> 
-    <el-col :span="12">
-      <line-type-data id="line_data"></line-type-data>
-    </el-col> 
-  </el-row>
-  <el-row :gutter="20">
-      <el-col :span="8">
-        <order-type id="bin1_data" type="ordertype"></order-type>
-      </el-col>
-      <el-col :span="8">
-        <order-source id="bin2_data" type="ordersource"></order-source>
-      </el-col>
-      <el-col :span="8">
-        <order-type id="bin3_data" type="areatype"></order-type>
-      </el-col>
-  </el-row>
+    <div class="dashboard_content">
+        <el-row :gutter="10" class="row_list">
+            <el-col :span="3"><div class="pay data_list"><p class="list_number">+208.65</p><p>盈亏(千万)</p></div></el-col>
+            <el-col :span="3"><div class="income data_list"><p class="list_number">+12.37</p><p>收益率(%)</p></div></el-col>
+            <el-col :span="3"><div class="hidden_investors data_list"><p class="number">686</p><p></p>潜在投资人(人)</div></el-col>
+            <el-col :span="3"><div class="intention_investors data_list"><p class="number">264</p><p>意向投资人(人)</p></div></el-col>
+            <el-col :span="3"><div class="waitpending_investors data_list"><p class="number">137</p><p>待审投资人(人))</p></div></el-col>
+            <el-col :span="3"><div class="pending_investors data_list"><p class="number">100</p><p></p>审核中投资人(人)</div></el-col>
+            <el-col :span="3"><div class="pass_investors data_list"><p class="number">86</p><p>审核通过投资人(人)</p></div></el-col>
+            <el-col :span="3"><div class="newadd_investors data_list"><p class="number">36</p><p>新增投资人(人)</p></div></el-col>
+        </el-row>
+        <el-row :gutter="10" class="row_list">
+            <el-col :span="12">
+              <bar-type-data id="bar_data"></bar-type-data>
+            </el-col> 
+            <el-col :span="12">
+              <line-type-data id="line_data"></line-type-data>
+            </el-col> 
+        </el-row>
+        <el-row :gutter="20">
+            <el-col :span="8">
+              <order-type id="bin1_data" type="ordertype"></order-type>
+            </el-col>
+            <el-col :span="8">
+              <order-source id="bin2_data" type="ordersource"></order-source>
+            </el-col>
+            <el-col :span="8">
+              <order-type id="bin3_data" type="areatype"></order-type>
+            </el-col>
+        </el-row>
+    </div>
 </div>
 </template>
 
@@ -60,16 +62,16 @@ import orderType from '../../components/echarts/orderType'
 </script>
 
 <style lang='scss' scoped>
-.dashboard_container{
-   background: #ffffff;
-  border-radius: 2px;
-  padding: 20px;
-}
 .table_head{
-    margin: 10px 0;
-    .yrbiaoge{
-      margin-right: 5px;
-    }
+  margin: 10px 0;
+  .yrmenu-home-normal{
+    margin-right: 5px;
+  }
+}
+.dashboard_content{
+  background-color: #fff;
+  padding: 30px;
+  border: 1px solid #ddd;
   }
   .row_list{
       margin-bottom: 20px;

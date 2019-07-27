@@ -111,7 +111,6 @@ import { tableDate } from "../../service/getDate";
       // 选项发生变化时触发
       handleSelectionChange(val){
         this.multipleSelection = val;
-        console.log(this.multipleSelection);
       },
       // 删除单个
       handleDelete(index, row) {
@@ -140,8 +139,10 @@ import { tableDate } from "../../service/getDate";
           for (let i = 0; i < length; i++) {
               str += this.multipleSelection[i].name + ' ';
           }
+          console.log(this.del_list)
           this.$message.error('删除了' + str);
           this.multipleSelection = [];
+          console.log(this.multipleSelection);
       },
       // 保存编辑
       saveEdit() {
@@ -175,7 +176,25 @@ import { tableDate } from "../../service/getDate";
       }
     },
     computed: {
-      
+      data() {
+          return this.tableData.filter((d) => {
+              let is_del = false;
+              for (let i = 0; i < this.del_list.length; i++) {
+                  if (d.name === this.del_list[i].name) {
+                      is_del = true;
+                      break;
+                  }
+              }
+              if (!is_del) {
+                  if (d.address.indexOf(this.select_cate) > -1 &&
+                      (d.name.indexOf(this.select_word) > -1 ||
+                          d.address.indexOf(this.select_word) > -1)
+                  ) {
+                      return d;
+                  }
+              }
+          })
+      }
     }
   }
 </script>
