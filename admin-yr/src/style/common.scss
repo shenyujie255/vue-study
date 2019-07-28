@@ -84,4 +84,15 @@ a{
 .animation_opactiy{
     animation: backOpacity 2s ease-in-out infinite;
 }
+.content_head{
+    margin: 10px 0;
+    .yrmenu-home-normal{
+      margin-right: 5px;
+    }
+  }
+.content_main{
+    background-color: #fff;
+    padding: 30px;
+    border: 1px solid #ddd;
+}
 

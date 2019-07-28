@@ -69,7 +69,7 @@ import { removeStore } from '../../utils/mUtils';
           this.fullscreen = !this.fullscreen;
       },
       outLogin(){
-        
+          removeStore('ms_username');
       },
       // 用户名下拉菜单选择事件
       handleCommand(command) {

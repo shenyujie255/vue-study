@@ -2,12 +2,12 @@
 <div class="table_container">
   <div class="table_box">
     <!-- 表格头部 -->
-    <div class="table_head">
+    <div class="content_head">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item><i class="icon-font yrbiaoge"></i>基础表格</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div class="table_content">
+    <div class="content_main">
       <!-- 操作 -->
       <div class="operate">
           <el-button type="primary" icon="el-icon-delete" @click="delAll">批量删除</el-button>
@@ -206,16 +206,12 @@ import { tableDate } from "../../service/getDate";
   font-size: 14px;
 }
 .table_box{
-  .table_head{
-    margin: 10px 0;
+  .content_head{
     .yrbiaoge{
       margin-right: 5px;
     }
   }
-  .table_content{
-    background-color: #fff;
-    padding: 30px;
-    border: 1px solid #ddd;
+  .content_main{
     .operate{
       margin-bottom: 20px;
       .select_input{

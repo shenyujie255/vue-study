@@ -1,11 +1,11 @@
 <template>
 <div class="dashboard_container">
-    <div class="table_head">
+    <div class="content_head">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item><i class="icon-font yrmenu-home-normal"></i>系统首页</el-breadcrumb-item>
         </el-breadcrumb>
     </div>
-    <div class="dashboard_content">
+    <div class="content_main">
         <el-row :gutter="10" class="row_list">
             <el-col :span="3"><div class="pay data_list"><p class="list_number">+208.65</p><p>盈亏(千万)</p></div></el-col>
             <el-col :span="3"><div class="income data_list"><p class="list_number">+12.37</p><p>收益率(%)</p></div></el-col>
@@ -62,13 +62,13 @@ import orderType from '../../components/echarts/orderType'
 </script>
 
 <style lang='scss' scoped>
-.table_head{
+.content_head{
   margin: 10px 0;
   .yrmenu-home-normal{
     margin-right: 5px;
   }
 }
-.dashboard_content{
+.content_main{
   background-color: #fff;
   padding: 30px;
   border: 1px solid #ddd;
