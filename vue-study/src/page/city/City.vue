@@ -16,7 +16,7 @@
     </form>
     <header v-if="historytitle" class="search_history">搜索历史</header>
     <ul class="getsearch_ul">
-      <li v-for="(item, index) in placelist" @click="nextpage(index,item.geohash)" :key="index">
+      <li v-for="(item, index) in placelist" @click="nextpage(index, item.geohash)" :key="index">
         <h4 class="pois_name ellipsis">{{ item.name }}</h4>
         <p class="pois_address ellipsis">{{ item.address }}</p>
       </li>

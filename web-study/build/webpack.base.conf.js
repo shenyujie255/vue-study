@@ -8,7 +8,16 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-
+const createLintingRule = () => ({
+  test: /\.(js|vue)$/,
+  loader: 'eslint-loader',
+  enforce: 'pre',
+  include: [resolve('src'), resolve('test')],
+  options: {
+    formatter: require('eslint-friendly-formatter'),
+    emitWarning: !config.dev.showEslintErrorsInOverlay
+  }
+})
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
@@ -20,17 +29,18 @@ module.exports = {
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath    //最终输出文件路径，判断是开发还是线上环境
+      : config.dev.assetsPublicPath
   },
-  resolve: {  //Resolve 配置 Webpack 如何寻找模块所对应的文件
-    extensions: ['.js', '.vue', '.json'],  //在导入语句没带文件后缀时，Webpack 会自动带上后缀后去尝试访问文件是否存在
-    alias: {  //配置项通过别名来把原导入路径映射成一个新的导入路径。
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
     }
   },
   module: {
     rules: [
+      ...(config.dev.useEslint ? [createLintingRule()] : []),
       {
         test: /\.vue$/,
         loader: 'vue-loader',
