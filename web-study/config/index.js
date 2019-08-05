@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       "api":{
-        target: '',
+        target: 'https://easy-mock.com/mock/5d45ac3f8aa85155233ce403/ys-web',
         changeOrigin: true,
         pathRewrite: {
           "^api": '/'

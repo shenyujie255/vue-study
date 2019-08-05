@@ -1,22 +1,20 @@
 <template>
   <div id="app">
     <router-view/>
+    <svg-icon></svg-icon>
   </div>
 </template>
 
 <script>
+import svgIcon from './components/commons/svg'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    svgIcon
+  }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+@import './style/common.scss';
 </style>
